@@ -2,61 +2,31 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\BankAccount;
+use App\Http\Controllers\BankAccountController;
 
-Route::get('/BankAccount', function () {
-    return view('bankaccount',[
-        'heading'=>'testing',
-        'bankAccounts'=>BankAccount::nodatabasedata()
-    ]);
-});
+Route::get('/BankAccount', [BankAccountController::class,'BankAccount']);
 
-Route::get('/BankAccount/find/{id}', function ($id) {
-    return view('find',[
-        'heading'=>'testing',
-        'bankAccounts'=>bankaccount::nodatabasedata(),
-        'targetId'=>$id
-    ]);
-});
+Route::get('/BankAccount/find/{id}',[BankAccountController::class,'find']);
 
-Route::get('/BankAccount/createaccount', function () {
-    return view('createaccount');
-});
+Route::get('/BankAccount/createaccout', [BankAccountController::class,'createaccount']);
 
-Route::get('/BankAccount/login', function () {
-    return view('login');
-});
+Route::get('/BankAccount/login', [BankAccountController::class ,'login']);
 
-Route::get('/BankAccount/profile', function () {
-    return view('profile');
-});
+Route::get('/BankAccount/profile', [BankAccountController::class ,'profile']);
 
-Route::get('/BankAccount/deleteaccount', function () {
-    return view('deleteaccount');
-});
+Route::get('/BankAccount/deleteaccount', [BankAccountController::class ,'deleteAccount']);
 
-Route::get('/BankAccount/deposit', function () {
-    return view('deposit');
-});
+Route::get('/BankAccount/deposit',[BankAccountController::class ,'deposit']);
 
-Route::get('/BankAccount/withdraw', function () {
-    return view('withdraw');
-});
+Route::get('/BankAccount/withdraw',[BankAccountController::class ,'withdraw']);
 
-Route::get('/BankAccount/changepassword', function () {
-    return view('changepassword');
-});
+Route::get('/BankAccount/changepassword', [BankAccountController::class ,'changePassword']);
 
-Route::get('/BankAccount/biayaadmin', function () {
-    return view('biayaadmin');
-});
+Route::get('/BankAccount/biayaadmin',[BankAccountController::class ,'biayaAdmin']);
 
-Route::get('/BankAccount/deposito', function () {
-    return view('deposito');
-});
+Route::get('/BankAccount/deposito', [BankAccountController::class ,'deposito']);
 
-Route::get('/BankAccount/requestkartu', function () {
-    return view('requestkartu');
-});
+Route::get('/BankAccount/requestkartu', [BankAccountController::class ,'requestKartu']);
 
 Route::post('/loggedin',function(){
     return "logged in";
