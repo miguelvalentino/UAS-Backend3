@@ -34,6 +34,17 @@ class BankAccountController extends Controller
         return view('profile');
     }
 
+    public function createdAccount(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'password'=>'required'
+        ]);
+        if(BankAccountController::findById($temp['id'])!=null){
+            return("error id taken");
+        }
+        return $temp;
+    }
+
     public function deleteAccount(){
         return view('deleteaccount');
     }
@@ -60,5 +71,15 @@ class BankAccountController extends Controller
     
     public function requestKartu(){
         return view ('requestkartu');
+    }
+
+    private function findById($targetId){
+        $bankAccounts=BankAccount::nodatabasedata();
+        foreach($bankAccounts as $bankAccount){
+            if ($targetId==$bankAccount['id']){
+                return $bankAccount;
+            }
+        }
+        return null;
     }
 }

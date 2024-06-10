@@ -7,9 +7,10 @@
 <body>
     <div style="border: 3px solid black;">
     <h2>placeholder</h2>
-    <form action="/created" method="POST">
+    <form action="/createdaccount" method="POST">
         @csrf
-        <input type="text" placeholder="placeholder">
+        <input name='id' type="text" placeholder="id">
+        <input name='password' type="text" placeholder="password">
         <button>placeholder</button>
 </body>
 </html>
