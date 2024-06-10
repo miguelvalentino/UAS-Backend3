@@ -8,7 +8,7 @@ Route::get('/BankAccount', [BankAccountController::class,'BankAccount']);
 
 Route::get('/BankAccount/find/{id}',[BankAccountController::class,'find']);
 
-Route::get('/BankAccount/createaccout', [BankAccountController::class,'createaccount']);
+Route::get('/BankAccount/createaccount', [BankAccountController::class,'createaccount']);
 
 Route::get('/BankAccount/login', [BankAccountController::class ,'login']);
 
@@ -30,13 +30,10 @@ Route::get('/BankAccount/requestkartu', [BankAccountController::class ,'requestK
 
 Route::post('/loggedin',[BankAccountController::class ,'loggedIn']);
 
-Route::post('/created',function(){
-    return "created";
-});
+Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
 
-Route::post('/changedpass',function(){
-    return "changedpass";
-});
+
+Route::post('/changedpass',[BankAccountController::class,'changedPass']);
 
 Route::post('/withdrawcomplete',function(){
     return "withdrawcompleted";
