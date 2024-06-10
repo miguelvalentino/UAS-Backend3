@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\BankAccount;
 use App\Http\Controllers\BankAccountController;
 
+Route::get('/',[BankAccountController::class,'home']);
+
 Route::get('/BankAccount', [BankAccountController::class,'BankAccount']);
 
 Route::get('/BankAccount/find/{id}',[BankAccountController::class,'find']);
@@ -18,7 +20,7 @@ Route::get('/BankAccount/deleteaccount', [BankAccountController::class ,'deleteA
 
 Route::get('/BankAccount/deposit',[BankAccountController::class ,'deposit']);
 
-Route::get('/BankAccount/withdraw',[BankAccountController::class ,'withdraw']);
+Route::get('/BankAccount/withdraw',[BankAccountController::class,'withdraw']);
 
 Route::get('/BankAccount/changepassword', [BankAccountController::class ,'changePassword']);
 

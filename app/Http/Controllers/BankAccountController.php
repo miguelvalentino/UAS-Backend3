@@ -7,6 +7,10 @@ use App\Models\BankAccount;
 
 class BankAccountController extends Controller
 {
+    public function home(){
+        return view('home');
+    }
+    
     public function login(){
         return view('login');
     }
@@ -64,7 +68,7 @@ class BankAccountController extends Controller
     public function deposit(){
         return view('deposit');
     }
-
+    
     public function withdraw(){
         return view('withdraw');
     }
