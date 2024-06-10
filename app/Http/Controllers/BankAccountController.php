@@ -112,4 +112,35 @@ class BankAccountController extends Controller
         }
         return null;
     }
+
+    public function depositComplete(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'depositAmount'=>'required'
+        ]);
+        $targetAccount=BankAccountController::findById($temp['id']);
+        if($targetAccount!=null){
+            $targetAccount['balance']+=$temp['depositAmount'];
+            return $targetAccount;
+        }else{
+            return "invalid id";
+        }
+    }
+
+    public function withdrawComplete(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'withdrawAmount'=>'required'
+        ]);
+        $targetAccount=BankAccountController::findById($temp['id']);
+        if($targetAccount['balance']<$temp['withdrawAmount']){
+            return "error: insufficient funds try withdrawing less";
+        }
+        if($targetAccount!=null){
+            $targetAccount['balance']-=$temp['withdrawAmount'];
+            return $targetAccount;
+        }else{
+            return "invalid id";
+        }
+    }
 }

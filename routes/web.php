@@ -37,13 +37,9 @@ Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
 
 Route::post('/changedpass',[BankAccountController::class,'changedPass']);
 
-Route::post('/withdrawcomplete',function(){
-    return "withdrawcompleted";
-});
+Route::post('/withdrawcomplete',[BankAccountController::class ,'withdrawComplete']);
 
-Route::post('/depositcomplete',function(){
-    return "depositcomplete";
-});
+Route::post('/depositcomplete',[BankAccountController::class ,'depositComplete']);
 
 Route::post('/requestcomplete',function(){
     return "requestcomplete";
