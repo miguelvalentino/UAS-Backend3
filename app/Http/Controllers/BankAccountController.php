@@ -29,6 +29,18 @@ class BankAccountController extends Controller
     public function createAccount(){
         return view('createaccount');
     }
+    public function loggedIn(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'password'=>'required'
+        ]);
+        $targetAccount=BankAccountController::findById($temp['id']);
+        if($targetAccount==null||$temp['password']!=$targetAccount['password']){
+            return "invalid credentals";
+        }else{
+            return $targetAccount;
+        }
+    }
 
     public function profile(){
         return view('profile');
