@@ -41,7 +41,7 @@ class BankAccountController extends Controller
     public function deposit(){
         return view('deposit');
     }
-
+    
     public function withdraw(){
         return view('withdraw');
     }

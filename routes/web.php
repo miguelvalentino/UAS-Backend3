@@ -18,7 +18,7 @@ Route::get('/BankAccount/deleteaccount', [BankAccountController::class ,'deleteA
 
 Route::get('/BankAccount/deposit',[BankAccountController::class ,'deposit']);
 
-Route::get('/BankAccount/withdraw',[BankAccountController::class ,'withdraw']);
+Route::get('/BankAccount/withdraw',[BankAccountController::class,'withdraw']);
 
 Route::get('/BankAccount/changepassword', [BankAccountController::class ,'changePassword']);
 
