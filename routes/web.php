@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\BankAccount;
 use App\Http\Controllers\BankAccountController;
 
+Route::get('/',[BankAccountController::class,'home']);
+
 Route::get('/BankAccount', [BankAccountController::class,'BankAccount']);
 
 Route::get('/BankAccount/find/{id}',[BankAccountController::class,'find']);
