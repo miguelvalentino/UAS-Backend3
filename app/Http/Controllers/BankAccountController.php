@@ -73,6 +73,20 @@ class BankAccountController extends Controller
         return view ('requestkartu');
     }
 
+    public function changedPass(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'oldPassword'=>'required',
+            'newPassword'=>'required'
+        ]);
+        $targetAccount=BankAccountController::findById($temp['id']);
+        if($targetAccount==null||($targetAccount['password'])!=$temp['oldPassword']){
+            return "invalid credential";
+        }
+        $targetAccount['password']=$temp['newPassword'];
+        return $targetAccount;
+    }
+
     private function findById($targetId){
         $bankAccounts=BankAccount::nodatabasedata();
         foreach($bankAccounts as $bankAccount){

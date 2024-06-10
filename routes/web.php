@@ -35,9 +35,7 @@ Route::post('/loggedin',function(){
 Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
 
 
-Route::post('/changedpass',function(){
-    return "changedpass";
-});
+Route::post('/changedpass',[BankAccountController::class,'changedPass']);
 
 Route::post('/withdrawcomplete',function(){
     return "withdrawcompleted";
