@@ -42,8 +42,13 @@ class BankAccountController extends Controller
         }
     }
 
-    public function profile(){
-        return view('profile');
+    public function profile($id){
+        $temp=BankAccountController::findById($id);
+        if ($temp!=null){
+            return ($temp);
+        }else{
+            return("no user found");
+        }
     }
 
     public function createdAccount(Request $request){
@@ -57,10 +62,14 @@ class BankAccountController extends Controller
         return $temp;
     }
 
-    public function deleteAccount(){
-        return view('deleteaccount');
+    public function deleteAccount($id){
+        $temp=BankAccountController::findById($id);
+        if ($temp!=null){
+            return ("succesfully deleted");
+        }else{
+            return("no user found");
+        }
     }
-
     public function deposit(){
         return view('deposit');
     }
