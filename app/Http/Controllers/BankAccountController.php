@@ -18,57 +18,33 @@ class BankAccountController extends Controller
     public function BankAccount(){
         return view('bankaccount',[
             'heading'=>'testing',
-            'bankAccounts'=>BankAccount::nodatabasedata()
-        ]);
-    }
-
-    public function find($id){
-        return view('find',[
-            'heading'=>'testing',
-            'bankAccounts'=>bankaccount::nodatabasedata(),
-            'targetId'=>$id
+            'bankAccounts'=>BankAccount::all()
         ]);
     }
 
     public function createAccount(){
         return view('createaccount');
     }
-    public function loggedIn(Request $request){
-        $temp=$request->validate([
-            'id'=>'required',
-            'password'=>'required'
-        ]);
-        $targetAccount=BankAccountController::findById($temp['id']);
-        if($targetAccount==null||$temp['password']!=$targetAccount['password']){
-            return "invalid credentals";
+
+    public function profile($id){
+        $temp=BankAccount::find($id);
+        if($temp!=null){
+            return $temp;
         }else{
-            return $targetAccount;
+            return("no user found");
         }
-    }
-
-    public function profile(){
-        return view('profile');
-        }
-
-    public function createdAccount(Request $request){
-        $temp=$request->validate([
-            'id'=>'required',
-            'password'=>'required'
-        ]);
-        if(BankAccountController::findById($temp['id'])!=null){
-            return("error id taken");
-        }
-        return $temp;
     }
 
     public function deleteAccount($id){
-        $temp=BankAccountController::findById($id);
+        $temp=BankAccount::find($id);
         if ($temp!=null){
+            $temp->delete();
             return ("succesfully deleted");
         }else{
             return("no user found");
         }
     }
+
     public function deposit(){
         return view('deposit');
     }
@@ -99,22 +75,12 @@ class BankAccountController extends Controller
             'oldPassword'=>'required',
             'newPassword'=>'required'
         ]);
-        $targetAccount=BankAccountController::findById($temp['id']);
+        $targetAccount=BankAccount::find($temp['id']);
         if($targetAccount==null||($targetAccount['password'])!=$temp['oldPassword']){
             return "invalid credential";
         }
-        $targetAccount['password']=$temp['newPassword'];
+        $targetAccount->update(['password'=>$temp['newPassword']]);
         return $targetAccount;
-    }
-
-    private function findById($targetId){
-        $bankAccounts=BankAccount::nodatabasedata();
-        foreach($bankAccounts as $bankAccount){
-            if ($targetId==$bankAccount['id']){
-                return $bankAccount;
-            }
-        }
-        return null;
     }
 
     public function depositComplete(Request $request){
@@ -122,9 +88,9 @@ class BankAccountController extends Controller
             'id'=>'required',
             'depositAmount'=>'required'
         ]);
-        $targetAccount=BankAccountController::findById($temp['id']);
+        $targetAccount=BankAccount::find($temp['id']);
         if($targetAccount!=null){
-            $targetAccount['balance']+=$temp['depositAmount'];
+            $targetAccount->update(['balance'=>($targetAccount['balance']+$temp['depositAmount'])]);
             return $targetAccount;
         }else{
             return "invalid id";
@@ -136,15 +102,47 @@ class BankAccountController extends Controller
             'id'=>'required',
             'withdrawAmount'=>'required'
         ]);
-        $targetAccount=BankAccountController::findById($temp['id']);
+        if($temp==null){
+            return "invalid id";
+        }
+        $targetAccount=BankAccount::find($temp['id']);
         if($targetAccount['balance']<$temp['withdrawAmount']){
             return "error: insufficient funds try withdrawing less";
         }
         if($targetAccount!=null){
-            $targetAccount['balance']-=$temp['withdrawAmount'];
+            $targetAccount->update(['balance'=>($targetAccount['balance']-$temp['withdrawAmount'])]);
             return $targetAccount;
-        }else{
-            return "invalid id";
         }
+    }
+
+    public function loggedIn(Request $request){
+        $temp=$request->validate([
+            'id'=>'required',
+            'password'=>'required'
+        ]);
+        $targetAccount=BankAccount::find($temp['id']);
+        if($targetAccount==null||$temp['password']!=$targetAccount['password']){
+            return "invalid credentals";
+        }else{
+            return $targetAccount;
+        }
+    }
+
+    public function createdAccount(Request $request){
+        $temp=$request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'telno'=>'required',
+            'balance'=>'required',
+            'password'=>'required'
+        ]);
+        BankAccount::create([
+            'name'=>$temp['name'],
+            'email'=>$temp['email'],
+            'telno'=>$temp['telno'],
+            'balance'=>$temp['balance'],
+            'password'=>$temp['password']
+        ]);
+        return $temp;
     }
 }

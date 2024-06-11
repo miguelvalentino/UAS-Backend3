@@ -14,7 +14,7 @@ Route::get('/BankAccount/createaccount', [BankAccountController::class,'createac
 
 Route::get('/BankAccount/login', [BankAccountController::class ,'login']);
 
-Route::get('/BankAccount/profile', [BankAccountController::class ,'profile']);
+Route::get('/BankAccount/profile/{id}', [BankAccountController::class ,'profile']);
 
 Route::get('/BankAccount/deleteaccount/{id}', [BankAccountController::class ,'deleteAccount']);
 
