@@ -13,7 +13,7 @@
     email:{{$bankAccount['email']}}
 </p>
 <p>
-    telno:{{$bankAccount['telNo']}}
+    telno:{{$bankAccount['telno']}}
 </p>
 <p>
     balance:{{$bankAccount['balance']}}

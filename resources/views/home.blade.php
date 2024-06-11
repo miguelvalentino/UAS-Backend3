@@ -10,8 +10,8 @@
     <form action= "/BankAccount" method= "GET">
         <button>all users</button>
 </form>
-    <form action="/BankAccount/profile/01" method="GET">
-        <button>profile(01 by default)</button>
+    <form action="/BankAccount/profile/1" method="GET">
+        <button>profile(1 by default)</button>
     </form>
     <form action="/BankAccount/createaccount" method="GET">
         <button>create account</button>
@@ -20,7 +20,7 @@
         <button>login</button>
 </form>
     <form action="/BankAccount/deleteaccount/01" method="GET">
-        <button>delete account</button>
+        <button>delete account(1 by default)</button>
 </form>
     <form action="/BankAccount/deposit" method="GET">
         <button>deposit</button>
