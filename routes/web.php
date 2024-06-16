@@ -34,7 +34,6 @@ Route::post('/loggedin',[BankAccountController::class ,'loggedIn']);
 
 Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
 
-
 Route::post('/changedpass',[BankAccountController::class,'changedPass']);
 
 Route::post('/withdrawcomplete',[BankAccountController::class ,'withdrawComplete']);
@@ -45,4 +44,4 @@ Route::post('/requestcomplete',function(){
     return "requestcomplete";
 });
 
-
+Route::post('/logout',[BankAccountController::class,'logout']);

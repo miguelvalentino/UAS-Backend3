@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Http\Request;
+
 use App\Models\BankAccount;
+use App\Models\User;
 
 class BankAccountController extends Controller
 {
@@ -18,6 +22,7 @@ class BankAccountController extends Controller
     public function BankAccount(){
         return view('bankaccount',[
             'heading'=>'testing',
+            'users'=>User::all(),
             'bankAccounts'=>BankAccount::all()
         ]);
     }
@@ -27,7 +32,7 @@ class BankAccountController extends Controller
     }
 
     public function profile($id){
-        $temp=BankAccount::find($id);
+        $temp=User::find($id);
         if($temp!=null){
             return $temp;
         }else{
@@ -36,7 +41,7 @@ class BankAccountController extends Controller
     }
 
     public function deleteAccount($id){
-        $temp=BankAccount::find($id);
+        $temp=User::find($id);
         if ($temp!=null){
             $temp->delete();
             return ("succesfully deleted");
@@ -71,60 +76,53 @@ class BankAccountController extends Controller
 
     public function changedPass(Request $request){
         $temp=$request->validate([
-            'id'=>'required',
             'oldPassword'=>'required',
             'newPassword'=>'required'
         ]);
-        $targetAccount=BankAccount::find($temp['id']);
-        if($targetAccount==null||($targetAccount['password'])!=$temp['oldPassword']){
-            return "invalid credential";
+        $acc=User::find(auth()->user()->id);
+        if(Hash::check($temp['oldPassword'],$acc['password'])){
+            $acc->update(['password'=>(bcrypt($temp['newPassword']))]);
+            return "password changed succsefully";
+        }else{
+            return "wrong password";
         }
-        $targetAccount->update(['password'=>$temp['newPassword']]);
-        return $targetAccount;
     }
 
     public function depositComplete(Request $request){
         $temp=$request->validate([
-            'id'=>'required',
             'depositAmount'=>'required'
         ]);
-        $targetAccount=BankAccount::find($temp['id']);
-        if($targetAccount!=null){
-            $targetAccount->update(['balance'=>($targetAccount['balance']+$temp['depositAmount'])]);
-            return $targetAccount;
-        }else{
-            return "invalid id";
-        }
+        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+
+        $bank->update(['balance'=>($bank['balance']+$temp['depositAmount'])]);
+        return "successfully deposited";
     }
 
     public function withdrawComplete(Request $request){
         $temp=$request->validate([
-            'id'=>'required',
             'withdrawAmount'=>'required'
         ]);
-        if($temp==null){
-            return "invalid id";
-        }
-        $targetAccount=BankAccount::find($temp['id']);
-        if($targetAccount['balance']<$temp['withdrawAmount']){
+        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        if($bank['balance']<$temp['withdrawAmount']){
             return "error: insufficient funds try withdrawing less";
         }
-        if($targetAccount!=null){
-            $targetAccount->update(['balance'=>($targetAccount['balance']-$temp['withdrawAmount'])]);
-            return $targetAccount;
-        }
+        $bank->update(['balance'=>($bank['balance']-$temp['withdrawAmount'])]);
+        return "withdrawal successfull";
     }
 
     public function loggedIn(Request $request){
         $temp=$request->validate([
-            'id'=>'required',
+            'email'=>'required',
             'password'=>'required'
         ]);
-        $targetAccount=BankAccount::find($temp['id']);
-        if($targetAccount==null||$temp['password']!=$targetAccount['password']){
-            return "invalid credentals";
+
+        if(auth()->attempt([
+        'email'=>$temp['email'],
+        'password'=>$temp['password']
+        ])){
+            return "succesffuly logged in";
         }else{
-            return $targetAccount;
+            return "invalid credentials";
         }
     }
 
@@ -132,17 +130,26 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             'name'=>'required',
             'email'=>'required',
-            'telno'=>'required',
-            'balance'=>'required',
-            'password'=>'required'
+            'password'=>'required',
         ]);
-        BankAccount::create([
+        $temp['password']=bcrypt($temp['password']);
+        $curr=User::create([
             'name'=>$temp['name'],
             'email'=>$temp['email'],
-            'telno'=>$temp['telno'],
-            'balance'=>$temp['balance'],
             'password'=>$temp['password']
         ]);
-        return $temp;
+        BankAccount::create([
+            'balance'=>0,
+            'user_id'=>$curr['id']
+        ]);
+        auth()->login($curr);
+        return $curr;
+    }
+
+    public function logout(Request $request){
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return "successfully logged out";
     }
 }

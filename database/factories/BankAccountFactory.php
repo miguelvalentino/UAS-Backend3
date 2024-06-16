@@ -17,11 +17,8 @@ class BankAccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->name(),
-            'email'=>fake()->unique()->safeEmail(),
-            'telno'=>fake()->phoneNumber(),
+            'user_id'=>null,
             'balance'=>fake()->numberBetween(1,1000),
-            'password'=>fake()->name()
         ];
     }
 }

@@ -5,21 +5,19 @@
     <title>Document</title>
 </head><body>
     <div style="border:3px solid black;">
-    <h2>placeholder</h2>
-
-    <form action= "/BankAccount" method= "GET">
+    @auth
+    <h2>current user:{{auth()->user()->name}}</h2>
+    <form action="/logout" method="POST">
+        @csrf
+        <button>logout</button>
+</form>
+<form action= "/BankAccount" method= "GET">
         <button>all users</button>
 </form>
-    <form action="/BankAccount/profile/1" method="GET">
-        <button>profile(1 by default)</button>
+    <form action="/BankAccount/profile/{{auth()->user()->id}}" method="GET">
+        <button>profile</button>
     </form>
-    <form action="/BankAccount/createaccount" method="GET">
-        <button>create account</button>
-</form>
-    <form action="/BankAccount/login" method="GET">
-        <button>login</button>
-</form>
-    <form action="/BankAccount/deleteaccount/01" method="GET">
+    <form action="/BankAccount/deleteaccount/{{auth()->user()->id}}" method="GET">
         <button>delete account(1 by default)</button>
 </form>
     <form action="/BankAccount/deposit" method="GET">
@@ -40,5 +38,14 @@
     <form action="/BankAccount/requestkartu" method="GET">
         <button>request kartu</button>
 </form>
+    @else
+    <h2>welcome</h2>
+    <form action="/BankAccount/createaccount" method="GET">
+        <button>create account</button>
+</form>
+    <form action="/BankAccount/login" method="GET">
+        <button>login</button>
+</form>
+    @endauth
 </body>
 </html>

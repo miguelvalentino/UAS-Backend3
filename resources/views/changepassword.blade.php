@@ -9,7 +9,6 @@
     <h2>placeholder</h2>
     <form action="/changedpass" method="POST">
         @csrf
-        <input name="id"type="text" placeholder="id">
         <input name="oldPassword" type="text" placeholder="old password">
         <input name="newPassword" type="text" placeholder="new password">
         <button>placeholder</button>
