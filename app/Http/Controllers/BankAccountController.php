@@ -82,7 +82,7 @@ class BankAccountController extends Controller
         $acc=User::find(auth()->user()->id);
         if(Hash::check($temp['oldPassword'],$acc['password'])){
             $acc->update(['password'=>(bcrypt($temp['newPassword']))]);
-            return "password changed succsefully";
+            return redirect('/');
         }else{
             return "wrong password";
         }
@@ -95,7 +95,7 @@ class BankAccountController extends Controller
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
 
         $bank->update(['balance'=>($bank['balance']+$temp['depositAmount'])]);
-        return "successfully deposited";
+        return redirect('/');
     }
 
     public function withdrawComplete(Request $request){
@@ -107,7 +107,7 @@ class BankAccountController extends Controller
             return "error: insufficient funds try withdrawing less";
         }
         $bank->update(['balance'=>($bank['balance']-$temp['withdrawAmount'])]);
-        return "withdrawal successfull";
+        return redirect('/');
     }
 
     public function loggedIn(Request $request){
@@ -120,7 +120,7 @@ class BankAccountController extends Controller
         'email'=>$temp['email'],
         'password'=>$temp['password']
         ])){
-            return "succesffuly logged in";
+            return redirect('/');
         }else{
             return "invalid credentials";
         }
@@ -143,13 +143,13 @@ class BankAccountController extends Controller
             'user_id'=>$curr['id']
         ]);
         auth()->login($curr);
-        return $curr;
+        return redirect('/');
     }
 
     public function logout(Request $request){
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return "successfully logged out";
+        return redirect('/');
     }
 }
