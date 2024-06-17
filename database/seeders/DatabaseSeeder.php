@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
         $temp=User::factory()->create([
             'name'=>"ahmad",
             'email'=>"ahmad@email.com",
-            'password'=>bcrypt("123456")
-
+            'password'=>bcrypt("123456"),
+            'admin'=>true
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
         $temp=User::factory()->create([
             'name'=>"jason",
             'email'=>"jason@email.com",
-            'password'=>bcrypt("123456")
-
+            'password'=>bcrypt("123456"),
+            'admin'=>true
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
@@ -54,8 +54,8 @@ class DatabaseSeeder extends Seeder
         $temp=User::factory()->create([
             'name'=>"jervis",
             'email'=>"jervis@email.com",
-            'password'=>bcrypt("123456")
-
+            'password'=>bcrypt("123456"),
+            'admin'=>true
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
@@ -65,8 +65,8 @@ class DatabaseSeeder extends Seeder
         $temp=User::factory()->create([
             'name'=>"wilmer",
             'email'=>"wilmer@email.com",
-            'password'=>bcrypt("123456")
-
+            'password'=>bcrypt("123456"),
+            'admin'=>true
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
@@ -76,8 +76,8 @@ class DatabaseSeeder extends Seeder
         $temp=User::factory()->create([
             'name'=>"fablius",
             'email'=>"fablius@email.com",
-            'password'=>bcrypt("123456")
-
+            'password'=>bcrypt("123456"),
+            'admin'=>true
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
