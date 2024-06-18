@@ -1,3 +1,5 @@
+<x-layout>
+<x-slot:title>change password<x-slot:title>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,3 +17,4 @@
         <button>placeholder</button>
 </body>
 </html>
+</x-layout>
