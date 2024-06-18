@@ -9,14 +9,14 @@
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <x-nav-link href="/">Home</x-nav-link>
-              <x-nav-link href="/bankaccount">Bank Account</x-nav-link>
-              <x-nav-link href="/bankaccount/createaccount">Create Account</x-nav-link>
-              <x-nav-link href="/bankaccount/profile">Profile</x-nav-link>
-              <x-nav-link href="/bankaccount/deposit">Deposit</x-nav-link>
-              <x-nav-link href="/bankaccount/withdraw">Withdraw</x-nav-link>
-              <x-nav-link href="/bankaccount/changepassword">Change Password</x-nav-link>
-              <x-nav-link href="/bankaccount/deposito">Deposito</x-nav-link>
-              <x-nav-link href="/bankaccount/requestkartu">Card Request</x-nav-link>
+              <x-nav-link href="/BankAccount">Bank Account</x-nav-link>
+              <x-nav-link href="/BankAccount/createaccount">Create Account</x-nav-link>
+              <x-nav-link href="/BankAccount/profile">Profile</x-nav-link>
+              <x-nav-link href="/BankAccount/deposit">Deposit</x-nav-link>
+              <x-nav-link href="/BankAccount/withdraw">Withdraw</x-nav-link>
+              <x-nav-link href="/BankAccount/changepassword">Change Password</x-nav-link>
+              <x-nav-link href="/BankAccount/deposito">Deposito</x-nav-link>
+              <x-nav-link href="/BankAccount/requestkartu">Card Request</x-nav-link>
             </div>
           </div>
         </div>
