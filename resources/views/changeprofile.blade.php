@@ -1,5 +1,5 @@
 <x-layout>
-<x-slot:title>change password</x-slot:title>
+<x-slot:title>Change Profile</x-slot:title>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,12 @@
 <body>
     <div style="border: 3px solid black;">
     <h2>placeholder</h2>
-    <form action="/changedpass" method="POST">
+    <form action="/changedprofile" method="POST">
         @csrf
         <input name="id"type="text" placeholder="id">
-        <input name="oldPassword" type="text" placeholder="old password">
-        <input name="newPassword" type="text" placeholder="new password">
+        <input name="Password" type="text" placeholder="Password">
+        <input name="newtelno" type="text" placeholder="new Telephone Number">
+        <input name="newEmail" type="text" placeholder="New Email">
         <button>placeholder</button>
 </body>
 </html>

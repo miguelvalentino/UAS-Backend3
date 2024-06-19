@@ -45,4 +45,5 @@ Route::post('/requestcomplete',function(){
     return "requestcomplete";
 });
 
+Route::get('/BankAccount/changeProfile', [BankAccountController::class ,'changeProfile']);
 

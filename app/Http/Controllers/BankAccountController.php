@@ -147,4 +147,21 @@ class BankAccountController extends Controller
         ]);
         return $temp;
     }
+
+    public function changedProfile(Request $request){
+        $temp=$request->validate([
+            'id'=> 'required',
+            'password'=>'required',
+            'newtelno'=>'required',
+            'newEmail'=>'required'
+        ]);
+        $targetAccount=BankAccount::find($temp['id']);
+        if($targetAccount==null||($targetAccount['password'])!=$temp['password']){
+            return "invalid credential";
+        }
+        $targetAccount->update(['telno'=>$temp['newtelno']]);
+        return $targetAccount;
+        $targetAccount->update(['email'=>$temp['newEmail']]);
+        return $targetAccount;
+    }
 }
