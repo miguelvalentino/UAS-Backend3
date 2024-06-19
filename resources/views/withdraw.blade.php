@@ -9,7 +9,6 @@
     <h2>placeholder</h2>
     <form action="/withdrawcomplete" method="POST">
         @csrf
-        <input name="id" type="text" placeholder="id">
         <input name="withdrawAmount" type="number" placeholder="withdraw amount">
         <button>placeholder</button>
 </body>

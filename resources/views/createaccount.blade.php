@@ -11,8 +11,6 @@
         @csrf
         <input name='name' type="text" placeholder="name">
         <input name='email' type="text" placeholder="email">
-        <input name='telno' type="text" placeholder="telno">
-        <input name='balance' type="number" placeholder="balance">
         <input name='password' type="text" placeholder="password">
         <button>placeholder</button>
 </body>

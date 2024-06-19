@@ -9,7 +9,6 @@
     <h2>placeholder</h2>
     <form action="/depositcomplete" method="POST">
         @csrf
-        <input name="id" type="text" placeholder="id">
         <input name="depositAmount" type="number" placeholder="deposit amount">
         <button>placeholder</button>
 </body>

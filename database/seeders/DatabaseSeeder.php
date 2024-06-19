@@ -20,58 +20,68 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+
+
+
         DatabaseSeeder::students();
+
     }
 
     private function students(): void{
-        BankAccount::factory()->create(
-            [
-                "name"=>"ahmad",
-                "email"=>"ahmad@email.com",
-                "telno"=>"123456",
-                "balance"=>53523,
-                "password"=>"123456"
-            ]
-            );
+        $temp=User::factory()->create([
+            'name'=>"ahmad",
+            'email'=>"ahmad@email.com",
+            'password'=>bcrypt("123456"),
+            'admin'=>true
+        ]);
+        BankAccount::factory()->create([
+            "balance"=>53523,
+            "user_id"=>$temp['id']
+        ]);
 
-        BankAccount::factory()->create(
-            [
-                "name"=>"jason",
-                "email"=>"jason@email.com",
-                "telno"=>"123456",
-                "balance"=>53523,
-                "password"=>"123456"
-            ]
-            );
+        $temp=User::factory()->create([
+            'name'=>"jason",
+            'email'=>"jason@email.com",
+            'password'=>bcrypt("123456"),
+            'admin'=>true
+        ]);
+        BankAccount::factory()->create([
+            "balance"=>53523,
+            "user_id"=>$temp['id']
+        ]);
 
-        BankAccount::factory()->create(
-            [
-                "name"=>"jervis",
-                "email"=>"jervis@email.com",
-                "telno"=>"123456",
-                "balance"=>53523,
-                "password"=>"123456"
-            ]
-            );
-        
-        BankAccount::factory()->create(
-            [
-                "name"=>"wilmer",
-                "email"=>"wilmer@email.com",
-                "telno"=>"123456",
-                "balance"=>53523,
-                "password"=>"123456"
-            ]
-            );
-        
-        BankAccount::factory()->create(
-            [
-                "name"=>"fablius",
-                "email"=>"fablius@email.com",
-                "telno"=>"123456",
-                "balance"=>53523,
-                "password"=>"123456"
-            ]
-            );
+        $temp=User::factory()->create([
+            'name'=>"jervis",
+            'email'=>"jervis@email.com",
+            'password'=>bcrypt("123456"),
+            'admin'=>true
+        ]);
+        BankAccount::factory()->create([
+            "balance"=>53523,
+            "user_id"=>$temp['id']
+        ]);
+
+        $temp=User::factory()->create([
+            'name'=>"wilmer",
+            'email'=>"wilmer@email.com",
+            'password'=>bcrypt("123456"),
+            'admin'=>true
+        ]);
+        BankAccount::factory()->create([
+            "balance"=>53523,
+            "user_id"=>$temp['id']
+        ]);
+
+        $temp=User::factory()->create([
+            'name'=>"fablius",
+            'email'=>"fablius@email.com",
+            'password'=>bcrypt("123456"),
+            'admin'=>true
+        ]);
+        BankAccount::factory()->create([
+            "balance"=>53523,
+            "user_id"=>$temp['id']
+        ]);
     }
 }

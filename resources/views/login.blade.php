@@ -9,7 +9,7 @@
     <h2>placeholder</h2>
     <form action="/loggedin" method="POST">
         @csrf
-        <input name="id" type="text" placeholder="id">
+        <input name="email" type="text" placeholder="email">
         <input name="password" type="text" placeholder="password">
         <button>placeholder</button>
 </body>
