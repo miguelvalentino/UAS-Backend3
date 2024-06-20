@@ -25,7 +25,7 @@ class BankAccountController extends Controller
         $temp=$users->joinSub($bankacc,'bankacc',function ($join) {
             $join->on('users.id','=','bankacc.user_id');
         });
-        if(request('pageSize'??false)&&request('page')??false){
+        if(request('pageSize')??false &&request('page')??false){
             $temp=$temp->paginate(request('pageSize'));
             $hasNext=$temp->hasMorePages();
             $hasPrev=$temp->onFirstPage();
