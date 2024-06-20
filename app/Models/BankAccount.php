@@ -15,10 +15,10 @@ class BankAccount extends Model
 
     public function scopeFilter($query, array $filters){
         if($filters['balanceGreaterThan']??false){
-            $query->where('balance','>',$filters['balanceGreaterThan']);
+            $query->where('balance','>',request(['balanceGreaterThan']));
         }
         if($filters['balanceLessThan']??false){
-            $query->where('balance','<',$filters['balanceLessThan']);
+            $query->where('balance','<',request(['balanceLessThan']));
         }
     }
 }

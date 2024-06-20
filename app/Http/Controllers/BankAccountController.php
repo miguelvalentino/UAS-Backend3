@@ -24,11 +24,30 @@ class BankAccountController extends Controller
         $bankacc=BankAccount::filter(request(['balanceLessThan','balanceGreaterThan']));
         $temp=$users->joinSub($bankacc,'bankacc',function ($join) {
             $join->on('users.id','=','bankacc.user_id');
-        })->paginate(10);
-        
+        });
+        if(request('page_size'??false)&&request('page')??false){
+            $temp=$temp->paginate(request('pageSize'));
+            $hasNext=$temp->hasMorePages();
+            $hasPrev=$temp->onFirstPage();
+            $lastPage=$temp->lastPage();
+            $isPaginating=true;
+        }else{
+            $temp=$temp->get();
+            $isPaginating=false;
+            $lastPage=0;
+            $hasPrev=0;
+            $hasNext=0;
+            $isPaginating=0;
+        }
         return view('bankaccount',[
             'heading' => 'testing',
-            'table' => $temp
+            'table' => $temp,
+            'page_size'=>request('pageSize'),
+            'currPage'=>request('page'),
+            'lastPage'=>$lastPage,
+            'hasPrev'=>$hasPrev,
+            'hasNext'=>$hasNext,
+            'isPaginating'=>$isPaginating
         ]);
     }
 
