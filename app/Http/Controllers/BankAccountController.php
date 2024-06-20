@@ -19,11 +19,11 @@ class BankAccountController extends Controller
         return view('login');
     }
 
-    public function BankAccount(){
+    public function BankAccount(Request $request){
         return view('bankaccount',[
             'heading'=>'testing',
-            'users'=>User::all(),
-            'bankAccounts'=>BankAccount::all()
+            'users'=>User::filter(request(['name','email','id','sort_by','sort_order']))->paginate(2),
+            'bankAccounts'=>BankAccount::latest()->get()
         ]);
     }
 
