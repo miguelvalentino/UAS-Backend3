@@ -30,7 +30,7 @@ Route::get('/BankAccount/deposito', [BankAccountController::class ,'deposito'])-
 
 Route::get('/BankAccount/requestkartu', [BankAccountController::class ,'requestKartu'])->middleware('loggedIn');
 
-Route::post('/loggedin',[BankAccountController::class ,'loggedIn']);
+Route::post('/loggedin',[BankAccountController::class ,'loggedIn'])->middleware('throttle:login');
 
 Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
 
