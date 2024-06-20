@@ -1,27 +1,23 @@
 <h1>{{$heading}}</h1>
 
-@unless(count($users)==0)
+@unless(count($table)==0)
 
-@foreach($users as $user)
+@foreach($table as $acc)
 <h2>
-    userid:{{$user['id']}}
+    userid:{{$acc['id']}}
 </h2>
 <p>
-    name:{{$user['name']}}
+    name:{{$acc['name']}}
 </p>
 <p>
-    email:{{$user['email']}}
+    email:{{$acc['email']}}
 </p>
 <p>
-    password:{{$user['password']}}
+    password:{{$acc['password']}}
 </p>
 <h4>bank account details</h4>
-@foreach($bankAccounts as $bankAccount)
-@if($bankAccount['user_id']==$user['id'])
-<p>bank account id:{{$bankAccount['id']}}</p>
-<p>balance:{{$bankAccount['balance']}}</p>
-@endif
-@endforeach
+<p>bank account id:{{$acc['bank_account_id']}}</p>
+<p>balance:{{$acc['balance']}}</p>
 @endforeach
 @else
 <p> nothing found</p>

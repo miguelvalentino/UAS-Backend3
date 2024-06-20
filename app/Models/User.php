@@ -53,16 +53,16 @@ class User extends Authenticatable
             $query->where('email','like','%'.request('email').'%');
         }
         if($filters['id']??false){
-            $query->where('id','like','%'.request('id').'%');
+            $query->where('user_id','like','%'.request('id').'%');
         }
         if($filters['sort_by']??false && $filters['sort_order']??false){
-            if(!in_array(request('sort_by'),['name','email','id'])){
+            if(!in_array(request('sort_by'),['name','email','id','balance'])){
                 abort(403,"invalid sort key");
             }
             if(!in_array(request('sort_order'),['asc','desc'])){
                 abort(403,'invalid sort order');
             }
         $query->orderBy(request('sort_by'),request('sort_order'));
-    }
+        }
     }
 }

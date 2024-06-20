@@ -20,10 +20,15 @@ class BankAccountController extends Controller
     }
 
     public function BankAccount(Request $request){
+        $users=User::filter(request(['name','email','id','sort_by','sort_order']));
+        $bankacc=BankAccount::filter(request(['balanceLessThan','balanceGreaterThan']));
+        $temp=$users->joinSub($bankacc,'bankacc',function ($join) {
+            $join->on('users.id','=','bankacc.user_id');
+        })->paginate(10);
+        
         return view('bankaccount',[
-            'heading'=>'testing',
-            'users'=>User::filter(request(['name','email','id','sort_by','sort_order']))->paginate(2),
-            'bankAccounts'=>BankAccount::latest()->get()
+            'heading' => 'testing',
+            'table' => $temp
         ]);
     }
 

@@ -12,4 +12,13 @@ class BankAccount extends Model
     protected $fillable=[
         'balance','user_id'
     ];
+
+    public function scopeFilter($query, array $filters){
+        if($filters['balanceGreaterThan']??false){
+            $query->where('balance','>',$filters['balanceGreaterThan']);
+        }
+        if($filters['balanceLessThan']??false){
+            $query->where('balance','<',$filters['balanceLessThan']);
+        }
+    }
 }
