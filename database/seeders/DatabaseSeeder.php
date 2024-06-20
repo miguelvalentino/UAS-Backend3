@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
-
-
         DatabaseSeeder::students();
-
+        for($i=0;$i<100;$i++){
+            $temp=User::factory()->create();
+            BankAccount::factory()->create([
+                'user_id'=>$temp['id']
+            ]);
+        }
     }
 
     private function students(): void{
