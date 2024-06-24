@@ -45,3 +45,5 @@ Route::post('/requestcomplete',function(){
 });
 
 Route::post('/logout',[BankAccountController::class,'logout']);
+
+Route::post('/depositocompleted',[BankAccountController::class,'depositocompleted']);

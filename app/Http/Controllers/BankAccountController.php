@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\BankAccount;
 use App\Models\User;
 
+use Carbon\Carbon;
+
 class BankAccountController extends Controller
 {
     public function home(){
@@ -177,5 +179,23 @@ class BankAccountController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    public function depositocompleted(Request $request){
+        $temp=$request->validate([
+            "depositoAmount"=>'required',
+        ]);
+        if($temp['depositoAmount']<10000000){
+            return "at least 10 000 000 is required";
+        }
+        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        if($temp['depositoAmount']>$bank['balance']){
+            return "insufficient funds";
+        }
+
+        $bank->update(['deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount'])]);
+        $bank->update(['balance'=>($bank['balance']-$temp['depositoAmount'])]);
+        $bank->update(['deposito_last_updated'=>Carbon::now()]);
+        return "successfully deposited to deposito balance";
     }
 }

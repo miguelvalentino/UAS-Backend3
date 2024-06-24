@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
         for($i=0;$i<100;$i++){
             $temp=User::factory()->create();
             BankAccount::factory()->create([
-                'user_id'=>$temp['id']
+                'user_id'=>$temp['id'],
+                'deposito_last_updated'=>$temp['created_at']
             ]);
         }
     }
@@ -39,7 +40,8 @@ class DatabaseSeeder extends Seeder
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
-            "user_id"=>$temp['id']
+            "user_id"=>$temp['id'],
+            'deposito_last_updated'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -50,7 +52,8 @@ class DatabaseSeeder extends Seeder
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
-            "user_id"=>$temp['id']
+            "user_id"=>$temp['id'],
+            'deposito_last_updated'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -61,7 +64,8 @@ class DatabaseSeeder extends Seeder
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
-            "user_id"=>$temp['id']
+            "user_id"=>$temp['id'],
+            'deposito_last_updated'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -72,7 +76,8 @@ class DatabaseSeeder extends Seeder
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
-            "user_id"=>$temp['id']
+            "user_id"=>$temp['id'],
+            'deposito_last_updated'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -83,7 +88,8 @@ class DatabaseSeeder extends Seeder
         ]);
         BankAccount::factory()->create([
             "balance"=>53523,
-            "user_id"=>$temp['id']
+            "user_id"=>$temp['id'],
+            'deposito_last_updated'=>$temp['created_at']
         ]);
     }
 }
