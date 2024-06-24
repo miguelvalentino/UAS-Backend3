@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('balance')->default(0);
+            $table->float('balance',10,2)->default(0);
+            $table->float('deposito_balance',10,2)->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timeStamp("deposito_last_updated")->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
