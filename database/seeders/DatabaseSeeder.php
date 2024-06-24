@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             $temp=User::factory()->create();
             BankAccount::factory()->create([
                 'user_id'=>$temp['id'],
-                'deposito_last_updated'=>$temp['created_at']
+                'deposito_last_updated'=>$temp['created_at'],
+                'interest_date'=>$temp['created_at']
             ]);
         }
     }
@@ -41,7 +42,8 @@ class DatabaseSeeder extends Seeder
         BankAccount::factory()->create([
             "balance"=>53523,
             "user_id"=>$temp['id'],
-            'deposito_last_updated'=>$temp['created_at']
+            'deposito_last_updated'=>$temp['created_at'],
+            'interest_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -53,7 +55,8 @@ class DatabaseSeeder extends Seeder
         BankAccount::factory()->create([
             "balance"=>53523,
             "user_id"=>$temp['id'],
-            'deposito_last_updated'=>$temp['created_at']
+            'deposito_last_updated'=>$temp['created_at'],
+            'interest_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -65,7 +68,8 @@ class DatabaseSeeder extends Seeder
         BankAccount::factory()->create([
             "balance"=>53523,
             "user_id"=>$temp['id'],
-            'deposito_last_updated'=>$temp['created_at']
+            'deposito_last_updated'=>$temp['created_at'],
+            'interest_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -77,7 +81,8 @@ class DatabaseSeeder extends Seeder
         BankAccount::factory()->create([
             "balance"=>53523,
             "user_id"=>$temp['id'],
-            'deposito_last_updated'=>$temp['created_at']
+            'deposito_last_updated'=>$temp['created_at'],
+            'interest_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -89,7 +94,8 @@ class DatabaseSeeder extends Seeder
         BankAccount::factory()->create([
             "balance"=>53523,
             "user_id"=>$temp['id'],
-            'deposito_last_updated'=>$temp['created_at']
+            'deposito_last_updated'=>$temp['created_at'],
+            'interest_date'=>$temp['created_at']
         ]);
     }
 }
