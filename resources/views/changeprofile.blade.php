@@ -9,7 +9,7 @@
 <body>
     <div style="border: 3px solid black;">
     <h2>placeholder</h2>
-    <form action="/changedProfile" method="POST">
+    <form action="/changedprofile" method="POST">
         @csrf
         <input name="id"type="text" placeholder="id">
         <input name="Password" type="text" placeholder="Password">

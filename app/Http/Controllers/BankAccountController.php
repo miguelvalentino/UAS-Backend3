@@ -159,9 +159,8 @@ class BankAccountController extends Controller
         if($targetAccount==null||($targetAccount['password'])!=$temp['password']){
             return "invalid credential";
         }
-        $targetAccount->update(['telno'=>$temp['newtelno']]);
-        return $targetAccount;
-        $targetAccount->update(['email'=>$temp['newEmail']]);
+        $targetAccount->update(['telno'=>$temp['newtelno'],
+                                'email'=>$temp['newEmail']]);
         return $targetAccount;
     }
 }

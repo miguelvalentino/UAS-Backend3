@@ -17,7 +17,7 @@
               <x-nav-link href="/BankAccount/changepassword">Change Password</x-nav-link>
               <x-nav-link href="/BankAccount/deposito">Deposito</x-nav-link>
               <x-nav-link href="/BankAccount/requestkartu">Card Request</x-nav-link>
-              <x-nav-link href="/BankAccount/changeProfile">Change Profile</x-nav-link>
+              <x-nav-link href="/BankAccount/changeprofile">Change Profile</x-nav-link>
             </div>
           </div>
         </div>
