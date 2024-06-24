@@ -17,6 +17,7 @@ return new class extends Migration
             $table->float('deposito_balance',10,2)->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timeStamp("deposito_last_updated")->nullable();
+            $table->timeStamp("interest_date")->nullable();
             $table->timestamps();
         });
     }
