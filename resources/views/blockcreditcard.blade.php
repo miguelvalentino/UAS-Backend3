@@ -7,8 +7,9 @@
 <body>
     <div style="border: 3px solid black;">
     <h2>placeholder</h2>
-    <form action="/requestcomplete" method="POST">
+    <form action="/blockcompleted" method="POST">
         @csrf
-        <button>request kartu</button>
+        <input name="target" type="text" placeholder="credit card">
+        <button>placeholder</button>
 </body>
 </html>

@@ -10,7 +10,7 @@ class BankAccount extends Model
     use HasFactory;
 
     protected $fillable=[
-        'balance','user_id','deposito_balance','deposito_last_updated','interest_date'
+        'balance','user_id','deposito_balance','deposito_last_updated','interest_date','credit_card_number','credit_card_blocked'
     ];
 
     public function scopeFilter($query, array $filters){
