@@ -47,3 +47,7 @@ Route::post('/requestcomplete',function(){
 Route::post('/logout',[BankAccountController::class,'logout']);
 
 Route::post('/depositocompleted',[BankAccountController::class,'depositocompleted']);
+
+Route::get('/BankAccount/changeprofile', [BankAccountController::class ,'changeProfile']);
+
+Route::post('/changedprofile',[BankAccountController::class,'changedProfile']);

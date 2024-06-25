@@ -90,6 +90,10 @@ class BankAccountController extends Controller
         return view('changepassword');
     }
 
+    public function changeProfile(){
+        return view('changeprofile');
+    }
+
     public function biayaAdmin(){
         return view('biayaadmin');
     }
@@ -106,6 +110,21 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             'oldPassword'=>'required',
             'newPassword'=>'required'
+        ]);
+        $acc=User::find(auth()->user()->id);
+        if(Hash::check($temp['oldPassword'],$acc['password'])){
+            $acc->update(['password'=>(bcrypt($temp['newPassword']))]);
+            return redirect('/');
+        }else{
+            return "wrong password";
+        }
+    }
+
+    public function changedProfile(Request $request){
+        $temp=$request->validate([
+            'password'=>'required',
+            'newtelno'=>'required',
+            'newEmail'=>'required'
         ]);
         $acc=User::find(auth()->user()->id);
         if(Hash::check($temp['oldPassword'],$acc['password'])){
