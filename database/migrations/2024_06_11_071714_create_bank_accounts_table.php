@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timeStamp("deposito_last_updated")->nullable();
             $table->String('credit_card_number')->nullable()->default(null);
             $table->boolean('credit_card_blocked')->nullable()->default(false);
+            $table->timeStamp("interest_date")->nullable();
             $table->timestamps();
         });
     }

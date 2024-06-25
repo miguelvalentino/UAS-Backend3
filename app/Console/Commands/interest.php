@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class interest extends Command
 {
     protected $signature = 'app:interest';
-    protected $description = 'interest';
+    protected $description = 'interest for deposito';
 
     public function handle()
     {
