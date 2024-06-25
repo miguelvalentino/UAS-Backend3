@@ -195,6 +195,9 @@ class BankAccountController extends Controller
             return "at least 10 000 000 is required";
         }
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        if($bank['credit_card_blocked']){
+            return "your credit card is blocked please requesst a new one";
+        }
         if($temp['depositoAmount']>$bank['balance']){
             return "insufficient funds";
         }
