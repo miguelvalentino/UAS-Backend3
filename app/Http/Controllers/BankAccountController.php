@@ -235,4 +235,34 @@ class BankAccountController extends Controller
         $bank->update(['credit_card_blocked'=>true]);
         return "successfully blocked ".$temp['target'];
     }
+
+    public function transfer(){
+        return view("transfer");
+    }
+    
+
+    public function transferCompleted(Request $request){
+        $temp=$request->validate([
+            'receiver'=>'required',
+            'amount'=>'required',
+            'password'=>'required'
+        ]);
+        $curr=auth()->user()->id;
+        $bank=BankAccount::where('user_id',$curr)->firstOrFail();
+
+        $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->firstOrFail();
+
+        if(!Hash::check($temp['password'],auth()->user()->password)){
+            return "incorrect password";
+        }
+
+        if($bank['balance']<$temp['amount']){
+            return "insufficient funds";
+        }
+
+        $bank->update(['balance'=>$bank['balance']-$temp['amount']]);
+        $bank->update(['credit_card_blocked'=>true]);
+        $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
+        return "successfully transferred balance";
+    }
 }

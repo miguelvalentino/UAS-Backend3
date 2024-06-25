@@ -32,6 +32,8 @@ Route::get('/BankAccount/requestkartu', [BankAccountController::class ,'requestK
 
 Route::get('/BankAccount/blockcreditcard', [BankAccountController::class ,'blockCreditCard'])->middleware(['loggedIn','adminRights']);
 
+Route::get('/BankAccount/transfer', [BankAccountController::class ,'transfer'])->middleware('loggedIn');
+
 Route::post('/loggedin',[BankAccountController::class ,'loggedIn'])->middleware('throttle:login');
 
 Route::post('/createdaccount',[BankAccountController::class ,'createdAccount']);
@@ -49,3 +51,5 @@ Route::post('/logout',[BankAccountController::class,'logout']);
 Route::post('/depositocompleted',[BankAccountController::class,'depositocompleted']);
 
 Route::post('/blockcompleted',[BankAccountController::class ,'blockCompleted']);
+
+Route::post('/transfercompleted',[BankAccountController::class ,'transferCompleted']);
