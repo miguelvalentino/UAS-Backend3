@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\BankAccount;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,13 +21,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        $faker=Faker::create();
+        
         DatabaseSeeder::students();
         for($i=0;$i<100;$i++){
             $temp=User::factory()->create();
             BankAccount::factory()->create([
                 'user_id'=>$temp['id'],
-                'deposito_last_updated'=>$temp['created_at']
+                'deposito_last_updated'=>$temp['created_at'],
+                'credit_card_number'=>$faker->unique()->creditCardNumber('Visa',true)
             ]);
         }
     }

@@ -10,6 +10,7 @@ use App\Models\BankAccount;
 use App\Models\User;
 
 use Carbon\Carbon;
+use Faker\Factory as Faker;
 
 class BankAccountController extends Controller
 {
@@ -121,7 +122,9 @@ class BankAccountController extends Controller
             'depositAmount'=>'required'
         ]);
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
-
+        if($bank['credit_card_blocked']){
+            return "your credit card is blocked please requesst a new one";
+        }
         $bank->update(['balance'=>($bank['balance']+$temp['depositAmount'])]);
         return redirect('/');
     }
@@ -131,6 +134,9 @@ class BankAccountController extends Controller
             'withdrawAmount'=>'required'
         ]);
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        if($bank['credit_card_blocked']){
+            return "your credit card is blocked please requesst a new one";
+        }
         if($bank['balance']<$temp['withdrawAmount']){
             return "error: insufficient funds try withdrawing less";
         }
@@ -192,10 +198,35 @@ class BankAccountController extends Controller
         if($temp['depositoAmount']>$bank['balance']){
             return "insufficient funds";
         }
-
         $bank->update(['deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount'])]);
         $bank->update(['balance'=>($bank['balance']-$temp['depositoAmount'])]);
         $bank->update(['deposito_last_updated'=>Carbon::now()]);
         return "successfully deposited to deposito balance";
+    }
+
+    public function requestComplete(){
+        $faker=Faker::create();
+        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        if($bank['credit_card_number']==null||$bank['credit_card_blocked']==true){
+            $temp=$faker->unique()->creditCardNumber('Visa',true);
+            $bank->update(['credit_card_number'=>$temp]);
+            $bank->update(['credit_card_blocked'=>false]);
+            return "your credit card number is ".$temp;
+        }else{
+            return "you are not eligible to request a credit card";
+        }
+    }
+
+    public function blockCreditCard(){
+        return view("blockcreditcard");
+    }
+
+    public function blockCompleted(Request $request){
+        $temp=$request->validate([
+            "target"=>'required',
+        ]);
+        $bank=BankAccount::where('credit_card_number',$temp['target'])->firstOrFail();
+        $bank->update(['credit_card_blocked'=>true]);
+        return "successfully blocked ".$temp['target'];
     }
 }

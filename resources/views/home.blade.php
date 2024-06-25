@@ -11,9 +11,14 @@
         @csrf
         <button>logout</button>
 </form>
+@if(auth()->user()->admin==true)
 <form action= "/BankAccount" method= "GET">
         <button>all users</button>
 </form>
+<form action= "/BankAccount/blockcreditcard" method= "GET">
+        <button>block credit card</button>
+</form>
+@endif
     <form action="/BankAccount/profile/{{auth()->user()->id}}" method="GET">
         <button>profile</button>
     </form>
