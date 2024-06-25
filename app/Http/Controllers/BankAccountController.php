@@ -59,6 +59,10 @@ class BankAccountController extends Controller
         return view('changepassword');
     }
 
+    public function changeProfile(){
+        return view('changeprofile');
+    }
+
     public function biayaAdmin(){
         return view('biayaadmin');
     }
@@ -156,11 +160,10 @@ class BankAccountController extends Controller
             'newEmail'=>'required'
         ]);
         $targetAccount=BankAccount::find($temp['id']);
-        if($targetAccount==null||($targetAccount['password'])!=$temp['password']){
-            return "invalid credential";
+        if($targetAccount==null||$targetAccount['password']!=$temp['password']){
+            return "invalid credentals";
         }
-        $targetAccount->update(['telno'=>$temp['newtelno'],
-                                'email'=>$temp['newEmail']]);
+        $targetAccount->update(['telno'=>$temp['newtelno'],'email'=>$temp['newEmail']]);
         return $targetAccount;
     }
 }

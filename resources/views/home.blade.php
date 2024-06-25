@@ -40,5 +40,8 @@
     <form action="/BankAccount/requestkartu" method="GET">
         <button>request kartu</button>
 </form>
+    <form action="/BankAccount/changeprofile" method="GET">
+        <button>change profile</button>
+</form>
 </body>
 </html>

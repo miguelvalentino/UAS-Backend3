@@ -47,3 +47,7 @@ Route::post('/requestcomplete',function(){
 
 Route::get('/BankAccount/changeprofile', [BankAccountController::class ,'changeProfile']);
 
+Route::post('/changedprofile',[BankAccountController::class,'changedProfile']);
+
+
+
