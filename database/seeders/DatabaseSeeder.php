@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             BankAccount::factory()->create([
                 'user_id'=>$temp['id'],
                 'deposito_last_updated'=>$temp['created_at'],
-                'credit_card_number'=>$faker->unique()->creditCardNumber('Visa',true)
+                'credit_card_number'=>$faker->unique()->creditCardNumber('Visa',true),
                 'interest_date'=>$temp['created_at']
             ]);
         }
