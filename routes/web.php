@@ -49,3 +49,7 @@ Route::post('/logout',[BankAccountController::class,'logout']);
 Route::post('/depositocompleted',[BankAccountController::class,'depositocompleted']);
 
 Route::post('/blockcompleted',[BankAccountController::class ,'blockCompleted']);
+
+Route::get('/BankAccount/changeprofile', [BankAccountController::class ,'changeProfile']);
+
+Route::post('/changedprofile',[BankAccountController::class,'changedProfile']);
