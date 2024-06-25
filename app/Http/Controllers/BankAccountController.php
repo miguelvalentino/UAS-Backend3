@@ -60,9 +60,12 @@ class BankAccountController extends Controller
 
     public function profile($id){
         $temp=User::find($id);
+        $bank=BankAccount::where('user_id',$id)->firstOrFail();
+
         if($temp!=null){
             return view('profile',[
-                'BankAccount'=>$temp
+                'BankAccount'=>$temp,
+                'Bank'=>$bank
             ]);
         }else{
             return("no user found");
