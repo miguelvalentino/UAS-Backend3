@@ -27,6 +27,28 @@ class interest0 extends Command
                 }
             }
         }
+
+        $accs=BankAccount::all();
+        foreach($accs as $acc){
+            $now=Carbon::parse($acc['tax_date']);
+            $curr=Carbon::now();
+            $diff=abs(floor($now->diffInMinutes($curr)));
+            if($diff>0 && $acc['tax_date']>0){
+                for($i=0;$i<$diff;$i++){
+                    if($acc['balance']<10){
+                        $after=$acc['balance']-0.0005;
+                    }elseif($acc['balance']<100){
+                        $after=$acc['balance']-0.005;
+                    }elseif($acc['balance']<1000){
+                        $after=$acc['balance']-0.05;
+                    }elseif($acc['balance']>1000){
+                        $after=$acc['balance']-0.5;
+                    }
+                    $acc->update(['balance'=>$after]);
+                    $temp=Carbon::parse($acc['tax_date'])->addMinute();
+                    $acc->update(['tax_date'=>$temp]);
+                }
+            }
+        }
     }
 }
-
