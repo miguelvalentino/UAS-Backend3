@@ -11,7 +11,7 @@
               <x-nav-link href="/">Home</x-nav-link>
               <x-nav-link href="/BankAccount">Bank Account</x-nav-link>
               <x-nav-link href="/BankAccount/createaccount">Create Account</x-nav-link>
-              <x-nav-link href="/BankAccount/profile">Profile</x-nav-link>
+              <x-nav-link href="/BankAccount/profile/">Profile</x-nav-link>
               <x-nav-link href="/BankAccount/deposit">Deposit</x-nav-link>
               <x-nav-link href="/BankAccount/withdraw">Withdraw</x-nav-link>
               <x-nav-link href="/BankAccount/changepassword">Change Password</x-nav-link>
