@@ -23,11 +23,28 @@ class BankAccountController extends Controller
     }
 
     public function BankAccount(Request $request){
-        $users=User::filter(request(['name','email','id','sortBy','sortOrder']));
-        $bankacc=BankAccount::filter(request(['balanceLessThan','balanceGreaterThan']));
-        $temp=$users->joinSub($bankacc,'bankacc',function ($join) {
-            $join->on('users.id','=','bankacc.user_id');
-        });
+        $temp=User::join('bank_accounts','users.id','=','bank_accounts.user_id');
+        if(request('search')??false){
+            $search=explode(':',request('search'),2);
+            $temp->where($search[0],'like','%'.$search[1].'%');
+        }
+        if(request('sort')??false){
+            $sort=explode(':',request('sort'),2);
+            $temp->orderBy($sort[0],$sort[1]);
+        }
+        $temp->select(
+            'users.id as user_id',
+            'users.name',
+            'users.email',
+            'users.password',
+            'users.admin',
+            'bank_accounts.id as bank_account_id',
+            'bank_accounts.deposito_balance',
+            'bank_accounts.balance',
+            'bank_accounts.credit_card_number as credit',
+            'bank_accounts.credit_card_blocked as blocked',
+        );
+                
         if(request('pageSize')??false &&request('page')??false){
             $temp=$temp->paginate(request('pageSize'));
             $hasNext=$temp->hasMorePages();

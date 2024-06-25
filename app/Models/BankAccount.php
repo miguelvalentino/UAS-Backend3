@@ -12,13 +12,4 @@ class BankAccount extends Model
     protected $fillable=[
         'balance','user_id','deposito_balance','deposito_last_updated','interest_date','credit_card_number','credit_card_blocked',"tax_date"
     ];
-
-    public function scopeFilter($query, array $filters){
-        if($filters['balanceGreaterThan']??false){
-            $query->where('balance','>',request(['balanceGreaterThan']));
-        }
-        if($filters['balanceLessThan']??false){
-            $query->where('balance','<',request(['balanceLessThan']));
-        }
-    }
 }
