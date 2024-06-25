@@ -44,25 +44,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function scopeFilter($query,array $filters){
-        if($filters['name']??false){
-            $query->where('name','like','%'.request('name').'%');
-        }
-        if($filters['email']??false){
-            $query->where('email','like','%'.request('email').'%');
-        }
-        if($filters['id']??false){
-            $query->where('user_id','like','%'.request('id').'%');
-        }
-        if($filters['sortBy']??false && $filters['sortOrder']??false){
-            if(!in_array(request('sortBy'),['name','email','id','balance'])){
-                abort(403,"invalid sort key");
-            }
-            if(!in_array(request('sortOrder'),['asc','desc'])){
-                abort(403,'invalid sort order');
-            }
-        $query->orderBy(request('sortBy'),request('sortOrder'));
-        }
-    }
 }
