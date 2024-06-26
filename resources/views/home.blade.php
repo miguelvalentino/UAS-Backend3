@@ -1,56 +1,98 @@
 @auth
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head><body>
-    <div style="border:3px solid black;">
-    <h2>current user:{{auth()->user()->name}}</h2>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">current user : {{auth()->user()->name}}</h2>
+  </div>
+  @vite('resources/css/app.css')
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form action="/logout" method="POST">
         @csrf
-        <button>logout</button>
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">logout</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
 @if(auth()->user()->admin==true)
-<form action= "/BankAccount" method= "GET">
-        <button>all users</button>
+<form action="/BankAccount" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">all users</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
 <form action= "/BankAccount/blockcreditcard" method= "GET">
-        <button>block credit card</button>
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">block credit card</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
 @endif
-    <form action="/BankAccount/profile/{{auth()->user()->id}}" method="GET">
-        <button>profile</button>
-    </form>
-    <form action="/BankAccount/deleteaccount/{{auth()->user()->id}}" method="GET">
-        <button>delete account(1 by default)</button>
+<form action="/BankAccount/profile/{{auth()->user()->id}}" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">profile</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/deposit" method="GET">
-        <button>deposit</button>
+<form action="/BankAccount/deleteaccount/{{auth()->user()->id}}" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">delete account</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/withdraw" method="GET">
-        <button>withdraw</button>
+<form action="/BankAccount/deposit" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Deposit</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/changepassword" method="GET">
-        <button>change password</button>
+<form action="/BankAccount/withdraw" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Withdraw</button>
+      </div>
+      <p><font color="white">space</font></p>
+</form>
+<form action="/BankAccount/changepassword" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Change Password</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
 <form action="/BankAccount/changeprofile" method="GET">
-        <button>change profile</button>
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Change Profile</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/biayaadmin" method="GET">
-        <button>biaya admin</button>
+<form action="/BankAccount/deposito" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Deposito</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/deposito" method="GET">
-        <button>deposito</button>
+<form action="/BankAccount/transfer" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Transfer</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/transfer" method="GET">
-        <button>transfer</button>
+<form action="/BankAccount/requestkartu" method="GET">
+        @csrf
+      <div>
+        <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Request Kartu</button>
+      </div>
+      <p><font color="white">space</font></p>
 </form>
-    <form action="/BankAccount/requestkartu" method="GET">
-        <button>request kartu</button>
-</form>
-</body>
-</html>
+</div>
 @else
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
