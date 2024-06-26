@@ -88,7 +88,12 @@ class BankAccountController extends Controller
         }
     }
 
-    public function deleteAccount($id){
+    public function deleteAccount(){
+        return view('deleteaccount');
+    
+    }
+
+    public function deletedAccount($id){
         $temp=User::find($id);
         if ($temp!=null){
             $temp->delete();
