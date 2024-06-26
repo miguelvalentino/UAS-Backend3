@@ -265,7 +265,6 @@ class BankAccountController extends Controller
             $temp=$faker->unique()->creditCardNumber('Visa',true);
             $bank->update(['credit_card_number'=>$temp]);
             $bank->update(['credit_card_blocked'=>false]);
-            session()->flash('credit_card_number', $temp);
             return redirect('/');
         }else{
             abort(403,"you are not eligible to request a credit card");
