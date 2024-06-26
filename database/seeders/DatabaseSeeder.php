@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $faker=Faker::create();
-        
+       
         DatabaseSeeder::students();
         for($i=0;$i<100;$i++){
             $temp=User::factory()->create();
@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
                 'user_id'=>$temp['id'],
                 'deposito_last_updated'=>$temp['created_at'],
                 'credit_card_number'=>$faker->unique()->creditCardNumber('Visa',true),
-                'interest_date'=>$temp['created_at']
+                'interest_date'=>$temp['created_at'],
+                'tax_date'=>$temp['created_at']
             ]);
         }
     }
@@ -46,7 +47,8 @@ class DatabaseSeeder extends Seeder
             "balance"=>53523,
             "user_id"=>$temp['id'],
             'deposito_last_updated'=>$temp['created_at'],
-            'interest_date'=>$temp['created_at']
+            'interest_date'=>$temp['created_at'],
+            'tax_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -59,7 +61,8 @@ class DatabaseSeeder extends Seeder
             "balance"=>53523,
             "user_id"=>$temp['id'],
             'deposito_last_updated'=>$temp['created_at'],
-            'interest_date'=>$temp['created_at']
+            'interest_date'=>$temp['created_at'],
+            'tax_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -72,7 +75,8 @@ class DatabaseSeeder extends Seeder
             "balance"=>53523,
             "user_id"=>$temp['id'],
             'deposito_last_updated'=>$temp['created_at'],
-            'interest_date'=>$temp['created_at']
+            'interest_date'=>$temp['created_at'],
+            'tax_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -85,7 +89,8 @@ class DatabaseSeeder extends Seeder
             "balance"=>53523,
             "user_id"=>$temp['id'],
             'deposito_last_updated'=>$temp['created_at'],
-            'interest_date'=>$temp['created_at']
+            'interest_date'=>$temp['created_at'],
+            'tax_date'=>$temp['created_at']
         ]);
 
         $temp=User::factory()->create([
@@ -98,7 +103,8 @@ class DatabaseSeeder extends Seeder
             "balance"=>53523,
             "user_id"=>$temp['id'],
             'deposito_last_updated'=>$temp['created_at'],
-            'interest_date'=>$temp['created_at']
+            'interest_date'=>$temp['created_at'],
+            'tax_date'=>$temp['created_at']
         ]);
     }
 }

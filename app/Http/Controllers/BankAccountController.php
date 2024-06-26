@@ -23,11 +23,28 @@ class BankAccountController extends Controller
     }
 
     public function BankAccount(Request $request){
-        $users=User::filter(request(['name','email','id','sortBy','sortOrder']));
-        $bankacc=BankAccount::filter(request(['balanceLessThan','balanceGreaterThan']));
-        $temp=$users->joinSub($bankacc,'bankacc',function ($join) {
-            $join->on('users.id','=','bankacc.user_id');
-        });
+        $temp=User::join('bank_accounts','users.id','=','bank_accounts.user_id');
+        if(request('search')??false){
+            $search=explode(':',request('search'),2);
+            $temp->where($search[0],'like','%'.$search[1].'%');
+        }
+        if(request('sort')??false){
+            $sort=explode(':',request('sort'),2);
+            $temp->orderBy($sort[0],$sort[1]);
+        }
+        $temp->select(
+            'users.id as user_id',
+            'users.name',
+            'users.email',
+            'users.password',
+            'users.admin',
+            'bank_accounts.id as bank_account_id',
+            'bank_accounts.deposito_balance',
+            'bank_accounts.balance',
+            'bank_accounts.credit_card_number as credit',
+            'bank_accounts.credit_card_blocked as blocked',
+        );
+                
         if(request('pageSize')??false &&request('page')??false){
             $temp=$temp->paginate(request('pageSize'));
             $hasNext=$temp->hasMorePages();
@@ -240,22 +257,51 @@ class BankAccountController extends Controller
         return "successfully blocked ".$temp['target'];
     }
 
-    public function changedProfile(Request $request){
-    	$temp=$request->validate([
-    	    'password'=>'required',
-            'newEmail'=>'required',
-            'newName'=>'required'
-            ]);
-        $acc=User::find(auth()->user()->id);
-            if (Hash::check($temp['password'], $acc->password)) {
-                $acc->update([
-       	        'email' => $temp['newEmail'],
-                'name' => $temp['newName']
-        	    ]);
-       	        return redirect('/');
-        	}else{
-        	return "wrong password";
-        	}
+    public function transfer(){
+        return view("transfer");
     }
-        
+    
+
+    public function transferCompleted(Request $request){
+        $temp=$request->validate([
+            'receiver'=>'required',
+            'amount'=>'required',
+            'password'=>'required'
+        ]);
+        $curr=auth()->user()->id;
+        $bank=BankAccount::where('user_id',$curr)->firstOrFail();
+
+        $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->firstOrFail();
+
+        if(!Hash::check($temp['password'],auth()->user()->password)){
+            return "incorrect password";
+        }
+
+        if($bank['balance']<$temp['amount']){
+            return "insufficient funds";
+        }
+
+        $bank->update(['balance'=>$bank['balance']-$temp['amount']]);
+        $bank->update(['credit_card_blocked'=>true]);
+        $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
+        return "successfully transferred balance";
+    }
+  
+    public function changedProfile(Request $request){
+        $temp=$request->validate([
+            'password'=>'required',
+              'newEmail'=>'required',
+              'newName'=>'required'
+              ]);
+          $acc=User::find(auth()->user()->id);
+              if (Hash::check($temp['password'], $acc->password)) {
+                  $acc->update([
+                  'email' => $temp['newEmail'],
+                  'name' => $temp['newName']
+                ]);
+                  return redirect('/');
+            }else{
+            return "wrong password";
+            }
+      }
 }

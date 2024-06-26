@@ -40,6 +40,9 @@
     <form action="/BankAccount/deposito" method="GET">
         <button>deposito</button>
 </form>
+    <form action="/BankAccount/transfer" method="GET">
+        <button>transfer</button>
+</form>
     <form action="/BankAccount/requestkartu" method="GET">
         <button>request kartu</button>
 </form>
