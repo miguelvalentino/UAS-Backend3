@@ -122,8 +122,12 @@ class BankAccountController extends Controller
 
     public function depositComplete(Request $request){
         $temp=$request->validate([
-            'depositAmount'=>'required'
+            'depositAmount'=>'required|numeric'
         ]);
+        if ($temp['depositAmount'] < 1) {
+            return back()->withErrors(['depositAmount' => 'The deposit amount must be at least 1.']);
+        }
+
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
         if($bank['credit_card_blocked']){
             return "your credit card is blocked please requesst a new one";
@@ -134,8 +138,11 @@ class BankAccountController extends Controller
 
     public function withdrawComplete(Request $request){
         $temp=$request->validate([
-            'withdrawAmount'=>'required'
+            'withdrawAmount'=>'required|numeric'
         ]);
+        if ($temp['withdrawAmount'] < 1) {
+            return back()->withErrors(['withdrawAmount' => 'The withdrawal amount must be at least 1.']);
+        }
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
         if($bank['credit_card_blocked']){
             return "your credit card is blocked please requesst a new one";
