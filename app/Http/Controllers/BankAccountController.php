@@ -279,7 +279,8 @@ class BankAccountController extends Controller
         $bank=BankAccount::where('user_id',$curr)->firstOrFail();
 
         $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->firstOrFail();
-
+        if($bank['credit_card_blocked']){
+            return "your credit card is blocked please requesst a new one"; }
         if(!Hash::check($temp['password'],auth()->user()->password)){
             return "incorrect password";
         }
