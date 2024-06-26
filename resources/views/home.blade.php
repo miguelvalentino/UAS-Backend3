@@ -34,6 +34,9 @@
     <form action="/BankAccount/changepassword" method="GET">
         <button>change password</button>
 </form>
+<form action="/BankAccount/changeprofile" method="GET">
+        <button>change profile</button>
+</form>
     <form action="/BankAccount/biayaadmin" method="GET">
         <button>biaya admin</button>
 </form>
