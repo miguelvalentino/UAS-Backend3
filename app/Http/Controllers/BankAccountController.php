@@ -266,7 +266,7 @@ class BankAccountController extends Controller
             $bank->update(['credit_card_number'=>$temp]);
             $bank->update(['credit_card_blocked'=>false]);
             session()->flash('credit_card_number', $temp);
-            return redirect()->back();
+            return redirect('/');
         }else{
             abort(403,"you are not eligible to request a credit card");
         }
@@ -283,10 +283,10 @@ class BankAccountController extends Controller
     
         $bank = BankAccount::where('credit_card_number', $temp['target'])->first();
         if ($bank == null) {
-            return redirect()->back()->with('message', 'No matching credit card found');
+            abort(403,"no credit card found");
         } else {
             $bank->update(['credit_card_blocked' => true]);
-            return redirect()->back()->with('message', 'Successfully blocked ' . $temp['target']);
+            return redirect('/');
         }
     }
 
