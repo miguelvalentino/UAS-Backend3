@@ -3,7 +3,7 @@
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+            <img class="h-8 w-8" src="x" alt="Your Company">
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
@@ -11,12 +11,13 @@
               <x-nav-link href="/">Home</x-nav-link>
               <x-nav-link href="/BankAccount">Bank Account</x-nav-link>
               <x-nav-link href="/BankAccount/createaccount">Create Account</x-nav-link>
-              <x-nav-link href="/BankAccount/profile">Profile</x-nav-link>
+              <x-nav-link href="/BankAccount/profile/{{auth()->user()->id}}">Profile</x-nav-link>
               <x-nav-link href="/BankAccount/deposit">Deposit</x-nav-link>
               <x-nav-link href="/BankAccount/withdraw">Withdraw</x-nav-link>
               <x-nav-link href="/BankAccount/changepassword">Change Password</x-nav-link>
               <x-nav-link href="/BankAccount/deposito">Deposito</x-nav-link>
               <x-nav-link href="/BankAccount/requestkartu">Card Request</x-nav-link>
+              <x-nav-link href="/BankAccount/changeprofile">Change Profile</x-nav-link>
             </div>
           </div>
         </div>
@@ -36,7 +37,7 @@
                 <button type="button" @click="isOpen = !isOpen" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="absolute -inset-1.5"></span>
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="p">
                 </button>
               </div>
 

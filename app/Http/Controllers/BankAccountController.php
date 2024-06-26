@@ -111,6 +111,10 @@ class BankAccountController extends Controller
         return view('changepassword');
     }
 
+    public function changeProfile(){
+        return view('changeprofile');
+    }
+
     public function biayaAdmin(){
         return view('biayaadmin');
     }
@@ -282,4 +286,22 @@ class BankAccountController extends Controller
         $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
         return "successfully transferred balance";
     }
+  
+    public function changedProfile(Request $request){
+        $temp=$request->validate([
+            'password'=>'required',
+              'newEmail'=>'required',
+              'newName'=>'required'
+              ]);
+          $acc=User::find(auth()->user()->id);
+              if (Hash::check($temp['password'], $acc->password)) {
+                  $acc->update([
+                  'email' => $temp['newEmail'],
+                  'name' => $temp['newName']
+                ]);
+                  return redirect('/');
+            }else{
+            return "wrong password";
+            }
+      }
 }

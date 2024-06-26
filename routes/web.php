@@ -52,4 +52,8 @@ Route::post('/depositocompleted',[BankAccountController::class,'depositocomplete
 
 Route::post('/blockcompleted',[BankAccountController::class ,'blockCompleted']);
 
+Route::get('/BankAccount/changeprofile', [BankAccountController::class ,'changeProfile']);
+
+Route::post('/changedprofile',[BankAccountController::class,'changedProfile']);
+
 Route::post('/transfercompleted',[BankAccountController::class ,'transferCompleted']);
