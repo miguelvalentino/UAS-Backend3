@@ -319,8 +319,8 @@ class BankAccountController extends Controller
         if($bank==null){
             abort(403,"no user found");
         }
-        $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->first();
-        if($receiver::where('credit_card_number',$receiver)){
+        $receiver=BankAccount::where('credit_card_number', $temp['receiver'])->first();
+        if($receiver==null){
             abort(403,"no matching credit card found");
         }
         if($bank['credit_card_blocked']){
@@ -347,7 +347,15 @@ class BankAccountController extends Controller
               'newEmail'=>'required',
               'newName'=>'required'
               ]);
-          $acc=User::find(auth()->user()->id);
+            $acc=User::find(auth()->user()->id);
+            $nameBool=User::where('name',$temp['newName'])->first();
+            $emailBool=User::where('email',$temp['newEmail'])->first();
+            if($nameBool!=null){
+                abort(403,"name is already taken");
+            }
+            if($emailBool!=null){
+                abort(403,"email is already taken");
+            }
               if (Hash::check($temp['password'], $acc->password)) {
                   $acc->update([
                   'email' => $temp['newEmail'],

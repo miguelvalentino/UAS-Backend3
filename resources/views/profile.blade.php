@@ -16,7 +16,7 @@
             echo "Admin: false";
         }?></h4>
         <h4><?php echo "Account Balance: " . floatval($Bank['balance']); ?></h4>
-        <h4><?php echo "Deposito Balance: " . floatval($Bank['deposito_amount']); ?></h4>
+        <h4><?php echo "Deposito Balance: " . floatval($Bank['deposito_balance']); ?></h4>
         <h4><?php echo "Credit Card Number: " . $Bank['credit_card_number']; ?></h4>
         <h4><?php if($Bank['credit_card_blocked']){
             echo "Credit Card Blocked: true";
