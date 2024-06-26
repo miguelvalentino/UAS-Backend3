@@ -1,86 +1,22 @@
-<x-layout>
-<x-slot name="title">Block credit card</x-slot>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Credit Card</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 400px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 24px;
-            color: #333;
-        }
-        .input-group {
-            margin: 20px 0;
-        }
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .btn {
-            background-color: #e74c3c;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #c0392b;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Block Credit Card</h1>
-        <form action="/blockcompleted" method="POST">
-            @csrf
-            <div class="input-group">
-                <label for="target">Credit Card Number</label>
-                <input type="text" id="target" name="target" required>
-            </div>
-            <button type="submit" class="btn">Block Card</button>
-        </form>
-        @if (session('message'))
-            <div class="message">
-                {{ session('message') }}
-            </div>
-        @endif
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Block Credit Card Number</h2>
     </div>
-</body>
-</html>
-</x-layout>
+    @vite('resources/css/app.css')
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form action="/blockcompleted" method="POST">
+          @csrf
+        <div>
+          <label class="block text-sm font-medium leading-6 text-gray-900">Credit Card Number</label>
+          <div class="mt-2">
+            <input name="target" type="text" autocomplete="target" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+        <div>
+        <p><font color="white">space</font></p>
+          <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Konfirmasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
