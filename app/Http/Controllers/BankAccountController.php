@@ -129,7 +129,7 @@ class BankAccountController extends Controller
     public function changedPass(Request $request){
         $temp=$request->validate([
             'oldPassword'=>'required',
-            'newPassword'=>'required'
+            'newPassword'=>'required|min:6'
         ]);
         $acc=User::find(auth()->user()->id);
         if($acc==null){
@@ -199,12 +199,12 @@ class BankAccountController extends Controller
             'password'=>'required|min:6',
         ]);
         $temp['password']=bcrypt($temp['password']);
-        $nameBool=User::where(['name',$temp['name']]);
-        $emailBool=User::where(['email',$temp['email']]);
-        if($nameBool){
+        $nameBool=User::where('name',$temp['name'])->first();
+        $emailBool=User::where('email',$temp['email'])->first();
+        if($nameBool!=null){
             abort(403,"name is already taken");
         }
-        if($emailBool){
+        if($emailBool!=null){
             abort(403,"email is already taken");
         }
         $curr=User::create([
