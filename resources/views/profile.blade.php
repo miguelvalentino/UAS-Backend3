@@ -12,7 +12,20 @@
         <p><?php echo "User ID: " . $BankAccount['id']; ?></p>
         <p><?php echo "Name: " . $BankAccount['name']; ?></p>
         <p><?php echo "Email: " . $BankAccount['email']; ?></p>
-        <p><?php echo "Account Balance: " . $Bank['balance']; ?></p>
+        <p><?php if($BankAccount['admin']){
+            echo "Admin: true";
+        }else{
+            echo "Admin: false";
+        }?></p>
+        <p><?php echo "Account Balance: " . floatval($Bank['balance']); ?></p>
+        <p><?php echo "Deposito Balance: " . floatval($Bank['deposito_amount']); ?></p>
+        <p><?php echo "Credit Card Number: " . $Bank['credit_card_number']; ?></p>
+        <p><?php if($Bank['credit_card_blocked']){
+            echo "Credit Card Blocked: true";
+        }else{
+            echo "Credit Card Blocked: false";
+        }?></p>
+
 </body>
 </html>
 </x-layout>
