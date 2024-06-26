@@ -159,7 +159,12 @@ class BankAccountController extends Controller
         if($bank['credit_card_blocked']){
             abort(403,"your credit card is blocked please requesst a new one");
         }
-        $bank->update(['balance'=>($bank['balance']+$temp['depositAmount'])]);
+        $curr=Carbon::now();
+        $bank->update([
+        'balance'=>($bank['balance']+$temp['depositAmount']),
+        'interest_date'=>$curr,
+        'tax_date'=>$curr
+        ]);
         return redirect('/');
     }
 
@@ -177,7 +182,12 @@ class BankAccountController extends Controller
         if($bank['balance']<$temp['withdrawAmount']){
             abort(403,"error: insufficient funds try withdrawing less");
         }
-        $bank->update(['balance'=>($bank['balance']-$temp['withdrawAmount'])]);
+        $curr=Carbon::now();
+        $bank->update([
+        'balance'=>($bank['balance']-$temp['withdrawAmount']),
+        'interest_date'=>$curr,
+        'tax_date'=>$curr
+        ]);
         return redirect('/');
     }
 
@@ -249,9 +259,11 @@ class BankAccountController extends Controller
         if($temp['depositoAmount']>$bank['balance']){
             abort(403,"insufficient funds");
         }
-        $bank->update(['deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount'])]);
-        $bank->update(['balance'=>($bank['balance']-$temp['depositoAmount'])]);
-        $bank->update(['deposito_last_updated'=>Carbon::now()]);
+        $bank->update([
+        'deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount']),
+        'balance'=>($bank['balance']-$temp['depositoAmount']),
+        'deposito_last_updated'=>Carbon::now()
+        ]);
         return "successfully deposited to deposito balance";
     }
 
@@ -263,8 +275,10 @@ class BankAccountController extends Controller
         }
         if($bank['credit_card_number']==null||$bank['credit_card_blocked']==true){
             $temp=$faker->unique()->creditCardNumber('Visa',true);
-            $bank->update(['credit_card_number'=>$temp]);
-            $bank->update(['credit_card_blocked'=>false]);
+            $bank->update([
+            'credit_card_number'=>$temp,
+            'credit_card_blocked'=>false
+            ]);
             return redirect('/');
         }else{
             abort(403,"you are not eligible to request a credit card");
@@ -319,8 +333,10 @@ class BankAccountController extends Controller
             abort(403,"insufficient funds");
         }
 
-        $bank->update(['balance'=>$bank['balance']-$temp['amount']]);
-        $bank->update(['credit_card_blocked'=>true]);
+        $bank->update([
+        'balance'=>$bank['balance']-$temp['amount'],
+        'credit_card_blocked'=>true 
+        ]);
         $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
         return "successfully transferred balance";
     }
