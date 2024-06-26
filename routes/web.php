@@ -16,8 +16,6 @@ Route::get('/BankAccount/login', [BankAccountController::class ,'login'])->middl
 
 Route::get('/BankAccount/profile/{userid}', [BankAccountController::class ,'profile'])->middleware(['loggedIn','currentUser']);
 
-Route::get('/BankAccount/deleteaccount/{userid}', [BankAccountController::class ,'deleteAccount'])->middleware(['loggedIn','currentUser']);
-
 Route::get('/BankAccount/deposit',[BankAccountController::class ,'deposit'])->middleware('loggedIn');
 
 Route::get('/BankAccount/withdraw',[BankAccountController::class,'withdraw'])->middleware('loggedIn');
@@ -33,6 +31,10 @@ Route::get('/BankAccount/requestkartu', [BankAccountController::class ,'requestK
 Route::get('/BankAccount/blockcreditcard', [BankAccountController::class ,'blockCreditCard'])->middleware(['loggedIn','adminRights']);
 
 Route::get('/BankAccount/transfer', [BankAccountController::class ,'transfer'])->middleware('loggedIn');
+
+Route::get('/BankAccount/deleteaccount',[BankAccountController::class ,'deleteAccount'])->middleware('loggedIn');
+
+Route::post('/deletedaccount/{userid}',[BankAccountController::class ,'deletedAccount'])->middleware(['loggedIn','currentUser']);
 
 Route::post('/loggedin',[BankAccountController::class ,'loggedIn'])->middleware('throttle:login');
 
