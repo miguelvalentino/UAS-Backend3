@@ -78,7 +78,6 @@ class BankAccountController extends Controller
     public function profile($id){
         $temp=User::find($id);
         $bank=BankAccount::where('user_id',$id)->first();
-
         if($temp!=null){
             return view('profile',[
                 'BankAccount'=>$temp,
@@ -148,7 +147,10 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             'depositAmount'=>'required|numeric|min:1'
         ]);
-        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        $bank=BankAccount::where('user_id',auth()->user()->id)->first();
+        if($bank==null){
+            abort(403,"no user found");
+        }
         if($bank['credit_card_blocked']){
             abort(403,"your credit card is blocked please requesst a new one");
         }
@@ -160,7 +162,10 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             'withdrawAmount'=>'required|numeric|min:1'
         ]);
-        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        $bank=BankAccount::where('user_id',auth()->user()->id)->first();
+        if($bank==null){
+            abort(403,"no user found");
+        }
         if($bank['credit_card_blocked']){
             abort(403,"your credit card is blocked please requesst a new one");
         }
@@ -247,7 +252,10 @@ class BankAccountController extends Controller
 
     public function requestComplete(){
         $faker=Faker::create();
-        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        $bank=BankAccount::where('user_id',auth()->user()->id)->first();
+        if($bank==null){
+            abort(403,"no user found");
+        }
         if($bank['credit_card_number']==null||$bank['credit_card_blocked']==true){
             $temp=$faker->unique()->creditCardNumber('Visa',true);
             $bank->update(['credit_card_number'=>$temp]);
@@ -288,7 +296,9 @@ class BankAccountController extends Controller
         ]);
         $curr=auth()->user()->id;
         $bank=BankAccount::where('user_id',$curr)->first();
-
+        if($bank==null){
+            abort(403,"no user found");
+        }
         $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->first();
         if($receiver::where('credit_card_number',$receiver)){
             abort(403,"no matching credit card found");
