@@ -77,7 +77,7 @@ class BankAccountController extends Controller
 
     public function profile($id){
         $temp=User::find($id);
-        $bank=BankAccount::where('user_id',$id)->firstOrFail();
+        $bank=BankAccount::where('user_id',$id)->first();
 
         if($temp!=null){
             return view('profile',[
@@ -85,7 +85,7 @@ class BankAccountController extends Controller
                 'Bank'=>$bank
             ]);
         }else{
-            return("no user found");
+            abort(403,"no user found");
         }
     }
 
@@ -95,7 +95,7 @@ class BankAccountController extends Controller
             $temp->delete();
             return ("succesfully deleted");
         }else{
-            return("no user found");
+            abort(403,"no user found");
         }
     }
 
@@ -133,25 +133,24 @@ class BankAccountController extends Controller
             'newPassword'=>'required'
         ]);
         $acc=User::find(auth()->user()->id);
+        if($acc==null){
+            abort(403,"invalid id");
+        }
         if(Hash::check($temp['oldPassword'],$acc['password'])){
             $acc->update(['password'=>(bcrypt($temp['newPassword']))]);
             return redirect('/');
         }else{
-            return "wrong password";
+            abort(403,"wrong password");
         }
     }
 
     public function depositComplete(Request $request){
         $temp=$request->validate([
-            'depositAmount'=>'required|numeric'
+            'depositAmount'=>'required|numeric|min:1'
         ]);
-        if ($temp['depositAmount'] < 1) {
-            return back()->withErrors(['depositAmount' => 'The deposit amount must be at least 1.']);
-        }
-
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
         if($bank['credit_card_blocked']){
-            return "your credit card is blocked please requesst a new one";
+            abort(403,"your credit card is blocked please requesst a new one");
         }
         $bank->update(['balance'=>($bank['balance']+$temp['depositAmount'])]);
         return redirect('/');
@@ -159,17 +158,14 @@ class BankAccountController extends Controller
 
     public function withdrawComplete(Request $request){
         $temp=$request->validate([
-            'withdrawAmount'=>'required|numeric'
+            'withdrawAmount'=>'required|numeric|min:1'
         ]);
-        if ($temp['withdrawAmount'] < 1) {
-            return back()->withErrors(['withdrawAmount' => 'The withdrawal amount must be at least 1.']);
-        }
         $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
         if($bank['credit_card_blocked']){
-            return "your credit card is blocked please requesst a new one";
+            abort(403,"your credit card is blocked please requesst a new one");
         }
         if($bank['balance']<$temp['withdrawAmount']){
-            return "error: insufficient funds try withdrawing less";
+            abort(403,"error: insufficient funds try withdrawing less");
         }
         $bank->update(['balance'=>($bank['balance']-$temp['withdrawAmount'])]);
         return redirect('/');
@@ -187,7 +183,7 @@ class BankAccountController extends Controller
         ])){
             return redirect('/');
         }else{
-            return "invalid credentials";
+            abort(403,"invalid credentials");
         }
     }
 
@@ -195,9 +191,17 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             'name'=>'required',
             'email'=>'required',
-            'password'=>'required',
+            'password'=>'required|min:6',
         ]);
         $temp['password']=bcrypt($temp['password']);
+        $nameBool=User::where(['name',$temp['name']]);
+        $emailBool=User::where(['email',$temp['email']]);
+        if($nameBool){
+            abort(403,"name is already taken");
+        }
+        if($emailBool){
+            abort(403,"email is already taken");
+        }
         $curr=User::create([
             'name'=>$temp['name'],
             'email'=>$temp['email'],
@@ -220,17 +224,20 @@ class BankAccountController extends Controller
 
     public function depositocompleted(Request $request){
         $temp=$request->validate([
-            "depositoAmount"=>'required',
+            "depositoAmount"=>'required|numeric|min:1',
         ]);
         if($temp['depositoAmount']<10000000){
-            return "at least 10 000 000 is required";
+            abort(403,"at least 10 000 000 is required");
         }
-        $bank=BankAccount::where('user_id',auth()->user()->id)->firstOrFail();
+        $bank=BankAccount::where('user_id',auth()->user()->id)->first();
+        if($bank==null){
+            abort(403,"no credit card found");
+        }
         if($bank['credit_card_blocked']){
-            return "your credit card is blocked please requesst a new one";
+            abort(403,"your credit card is blocked please request a new one");
         }
         if($temp['depositoAmount']>$bank['balance']){
-            return "insufficient funds";
+            abort(403,"insufficient funds");
         }
         $bank->update(['deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount'])]);
         $bank->update(['balance'=>($bank['balance']-$temp['depositoAmount'])]);
@@ -247,7 +254,7 @@ class BankAccountController extends Controller
             $bank->update(['credit_card_blocked'=>false]);
             return "your credit card number is ".$temp;
         }else{
-            return "you are not eligible to request a credit card";
+            abort(403,"you are not eligible to request a credit card");
         }
     }
 
@@ -259,9 +266,13 @@ class BankAccountController extends Controller
         $temp=$request->validate([
             "target"=>'required',
         ]);
-        $bank=BankAccount::where('credit_card_number',$temp['target'])->firstOrFail();
-        $bank->update(['credit_card_blocked'=>true]);
-        return "successfully blocked ".$temp['target'];
+        $bank=BankAccount::where('credit_card_number',$temp['target'])->first();
+        if($bank==null){
+            abort(403,"no matching credit card found");
+        }else{
+            $bank->update(['credit_card_blocked'=>true]);
+            return "successfully blocked ".$temp['target'];
+        }   
     }
 
     public function transfer(){
@@ -272,21 +283,24 @@ class BankAccountController extends Controller
     public function transferCompleted(Request $request){
         $temp=$request->validate([
             'receiver'=>'required',
-            'amount'=>'required',
+            'amount'=>'required|numeric|min:1',
             'password'=>'required'
         ]);
         $curr=auth()->user()->id;
-        $bank=BankAccount::where('user_id',$curr)->firstOrFail();
+        $bank=BankAccount::where('user_id',$curr)->first();
 
-        $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->firstOrFail();
-        if($bank['credit_card_blocked']){
-            return "your credit card is blocked please requesst a new one"; }
-        if(!Hash::check($temp['password'],auth()->user()->password)){
-            return "incorrect password";
+        $receiver=BankAccount::where('credit_card_number',$temp['receiver'])->first();
+        if($receiver::where('credit_card_number',$receiver)){
+            abort(403,"no matching credit card found");
         }
-
+        if($bank['credit_card_blocked']){
+            abort(403,"your credit card is blocked please requesst a new one"); 
+        }
+        if(!Hash::check($temp['password'],auth()->user()->password)){
+            abort(403,"incorrect password");
+        }
         if($bank['balance']<$temp['amount']){
-            return "insufficient funds";
+            abort(403,"insufficient funds");
         }
 
         $bank->update(['balance'=>$bank['balance']-$temp['amount']]);
@@ -309,7 +323,7 @@ class BankAccountController extends Controller
                 ]);
                   return redirect('/');
             }else{
-            return "wrong password";
+            abort(403,"wrong password");
             }
       }
 }
