@@ -265,7 +265,8 @@ class BankAccountController extends Controller
             $temp=$faker->unique()->creditCardNumber('Visa',true);
             $bank->update(['credit_card_number'=>$temp]);
             $bank->update(['credit_card_blocked'=>false]);
-            return "your credit card number is ".$temp;
+            session()->flash('credit_card_number', $temp);
+            return redirect()->back();
         }else{
             abort(403,"you are not eligible to request a credit card");
         }
@@ -276,16 +277,17 @@ class BankAccountController extends Controller
     }
 
     public function blockCompleted(Request $request){
-        $temp=$request->validate([
-            "target"=>'required',
+        $temp = $request->validate([
+            "target" => 'required',
         ]);
-        $bank=BankAccount::where('credit_card_number',$temp['target'])->first();
-        if($bank==null){
-            abort(403,"no matching credit card found");
-        }else{
-            $bank->update(['credit_card_blocked'=>true]);
-            return "successfully blocked ".$temp['target'];
-        }   
+    
+        $bank = BankAccount::where('credit_card_number', $temp['target'])->first();
+        if ($bank == null) {
+            return redirect()->back()->with('message', 'No matching credit card found');
+        } else {
+            $bank->update(['credit_card_blocked' => true]);
+            return redirect()->back()->with('message', 'Successfully blocked ' . $temp['target']);
+        }
     }
 
     public function transfer(){
