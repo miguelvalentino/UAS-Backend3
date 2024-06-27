@@ -3,6 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-blue-500">BankMik</h2>
+    <h2 class="mt-10 text-left text-2xl font-bold leading-9 tracking-tight text-gray-900">Your Profile</h2>
 </head>
 <body>
     <form action="/profile/{userid}" method="POST">
