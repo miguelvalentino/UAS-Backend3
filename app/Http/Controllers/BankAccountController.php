@@ -259,10 +259,14 @@ class BankAccountController extends Controller
         if($temp['depositoAmount']>$bank['balance']){
             abort(403,"insufficient funds");
         }
+        $currDate=Carbon::now();
+        if($bank['deposito_date']==null){
+            $bank->update(['deposito_date'=>$currDate]);
+        }
         $bank->update([
         'deposito_balance'=>($bank['deposito_balance']+$temp['depositoAmount']),
         'balance'=>($bank['balance']-$temp['depositoAmount']),
-        'deposito_last_updated'=>Carbon::now()
+        'deposito_last_updated'=>$currDate
         ]);
         return "successfully deposited to deposito balance";
     }
@@ -370,5 +374,23 @@ class BankAccountController extends Controller
             }else{
             abort(403,"wrong password");
             }
+      }
+
+      public function withdrawDep(){
+        return view('withdrawdep');
+      }
+
+      public function withdrawDepComplete(){
+        $acc=BankAccount::where('user_id',auth()->user()->id)->first();
+        $temp=Carbon::parse($acc['deposito_date']);
+        if(($temp->diffInMinutes(Carbon::now()))<1){
+            abort(403,"wait at least 1 minute after your first deposito to withdraw");
+        }
+        $acc->update([
+            'balance'=>$acc['balance']+$acc['deposito_balance'],
+            'deposito_balance'=>0,
+            'deposito_last_updated'=>null,
+            'deposito_date'=>null
+        ]);
       }
 }
