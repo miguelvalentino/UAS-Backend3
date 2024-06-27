@@ -392,5 +392,6 @@ class BankAccountController extends Controller
             'deposito_last_updated'=>null,
             'deposito_date'=>null
         ]);
+        return "successfully withdrawed deposito";
       }
 }
