@@ -334,8 +334,7 @@ class BankAccountController extends Controller
         }
 
         $bank->update([
-        'balance'=>$bank['balance']-$temp['amount'],
-        'credit_card_blocked'=>true 
+        'balance'=>$bank['balance']-$temp['amount']
         ]);
         $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
         return "successfully transferred balance";
