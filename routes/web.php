@@ -34,6 +34,10 @@ Route::get('/BankAccount/transfer', [BankAccountController::class ,'transfer'])-
 
 Route::get('/BankAccount/deleteaccount',[BankAccountController::class ,'deleteAccount'])->middleware('loggedIn');
 
+Route::get('/BankAccount/withdrawdep',[BankAccountController::class,'withdrawDep'])->middleware('loggedIn');
+
+Route::post('/withdrawdepcomplete',[BankAccountController::class,'withdrawDepComplete'])->middleware('loggedIn');
+
 Route::post('/deletedaccount/{userid}',[BankAccountController::class ,'deletedAccount'])->middleware(['loggedIn','currentUser']);
 
 Route::post('/loggedin',[BankAccountController::class ,'loggedIn'])->middleware('throttle:login');

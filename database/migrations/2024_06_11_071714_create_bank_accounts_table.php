@@ -17,6 +17,7 @@ return new class extends Migration
             $table->float('deposito_balance',10,2)->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timeStamp("deposito_last_updated")->nullable();
+            $table->timeStamp("deposito_date")->nullable();
             $table->String('credit_card_number')->unique()->nullable();
             $table->boolean('credit_card_blocked')->nullable()->default(false);
             $table->timeStamp("interest_date")->nullable();
