@@ -332,11 +332,17 @@ class BankAccountController extends Controller
         if($bank['balance']<$temp['amount']){
             abort(403,"insufficient funds");
         }
-
+        $currDate=Carbon::now();
         $bank->update([
-        'balance'=>$bank['balance']-$temp['amount']
+        'balance'=>$bank['balance']-$temp['amount'],
+        'interest_date'=>$currDate,
+        'tax_date'=>$currDate
         ]);
-        $receiver->update(['balance'=>$receiver['balance']+$temp['amount']]);
+        $receiver->update([
+        'balance'=>$receiver['balance']+$temp['amount'],
+        'interest_date'=>$currDate,
+        'tax_date'=>$currDate
+        ]);
         return "successfully transferred balance";
     }
   
